@@ -4,6 +4,9 @@ all: compiler processor
 
 stack_rebuild: clean stack
 
+debug: CXXFLAGS+=-D DEBUG -D CANARY_PROT -D HASH_PROT
+debug: stack processor
+
 debug_stack: CXXFLAGS+=-D DEBUG -D CANARY_PROT -D HASH_PROT
 debug_stack: stack
 

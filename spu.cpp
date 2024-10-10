@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "assembler.h"
 #include "Stack/stack.h"
 
 int main (const int argc, const char* argv[])
@@ -23,8 +25,8 @@ int main (const int argc, const char* argv[])
 
     while (true)
     {
-        long long cmd = 0;
-        if (fscanf (input, "%lld", &cmd) != 1)
+        enum ASSEMBLER cmd = 0;
+        if (fscanf (input, "%d", &cmd) != 1)
         {
             fprintf (stderr, "There is invalid program at the position %s:%lu\n", argv [1], count_cmd);
             fclose  (input);
@@ -35,7 +37,7 @@ int main (const int argc, const char* argv[])
 
         switch (cmd)
         {
-            case 1:
+            case PUSH:
             {
                 long long number = 0;
                 if (fscanf (input, "%lld", &number) != 1)
@@ -48,7 +50,7 @@ int main (const int argc, const char* argv[])
                 stack_push (stk, number);
                 break;
             }
-            case 2:
+            case POP:
             {
                 long long number = 0;
                 if (stack_pop (stk, &number) == CANT_POP)
@@ -60,7 +62,7 @@ int main (const int argc, const char* argv[])
                 }
                 break;
             }
-            case 3:
+            case ADD:
             {
                 long long a = 0;
                 if (stack_pop (stk, &a) == CANT_POP)
@@ -81,7 +83,7 @@ int main (const int argc, const char* argv[])
                 stack_push (stk, a + b);
                 break;
             }
-            case 4:
+            case SUB:
             {
                 long long a = 0;
                 if (stack_pop (stk, &a) == CANT_POP)
@@ -102,7 +104,7 @@ int main (const int argc, const char* argv[])
                 stack_push (stk, a - b);
                 break;
             }
-            case 5:
+            case MUL:
             {
                 long long a = 0;
                 if (stack_pop (stk, &a) == CANT_POP)
@@ -123,7 +125,7 @@ int main (const int argc, const char* argv[])
                 stack_push (stk, a * b);
                 break;
             }
-            case 6:
+            case DIV:
             {
                 long long a = 0;
                 if (stack_pop (stk, &a) == CANT_POP)
@@ -151,7 +153,7 @@ int main (const int argc, const char* argv[])
                 stack_push (stk, a / b);
                 break;
             }
-            case 7:
+            case OUT:
             {
                 long long number = 0;
                 if (stack_pop (stk, &number) == CANT_POP)
@@ -164,12 +166,12 @@ int main (const int argc, const char* argv[])
                 fprintf (stdout, "%lld\n", number);
                 break;
             }
-            case 8:
+            case DUMP:
             {
                 DUMP (stk);
                 break;
             }
-            case -1:
+            case HLT:
             {
                 fclose (input);
                 STACK_DTOR (stk);

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "assembler.h"
+
 int main (const int argc, const char* argv [])
 {
     if (argc != 3)
@@ -41,7 +43,7 @@ int main (const int argc, const char* argv [])
         count_cmd++;
         if (strcmp (cmd, "push") == 0)
         {
-            fprintf (output, "%d ", 1);
+            fprintf (output, "%d ", PUSH);
             long long number = 0;
             if (fscanf (input, "%lld", &number) != 1)
             {
@@ -55,42 +57,42 @@ int main (const int argc, const char* argv [])
         }
         if (strcmp (cmd, "pop") == 0)
         {
-            fprintf (output, "%d\n", 2);
+            fprintf (output, "%d\n", POP);
             continue;
         }
         if (strcmp (cmd, "add") == 0)
         {
-            fprintf (output, "%d\n", 3);
+            fprintf (output, "%d\n", ADD);
             continue;
         }
         if (strcmp (cmd, "sub") == 0)
         {
-            fprintf (output, "%d\n", 4);
+            fprintf (output, "%d\n", SUB);
             continue;
         }
         if (strcmp (cmd, "mul") == 0)
         {
-            fprintf (output, "%d\n", 5);
+            fprintf (output, "%d\n", MUL);
             continue;
         }
         if (strcmp (cmd, "div") == 0)
         {
-            fprintf (output, "%d\n", 6);
+            fprintf (output, "%d\n", DIV);
             continue;
         }
         if (strcmp (cmd, "out") == 0)
         {
-            fprintf (output, "%d\n", 7);
+            fprintf (output, "%d\n", OUT);
             continue;
         }
         if (strcmp (cmd, "dump") == 0)
         {
-            fprintf (output, "%d\n", 8);
+            fprintf (output, "%d\n", DUMP);
             continue;
         }
         if (strcmp (cmd, "hlt") == 0)
         {
-            fprintf (output, "%d\n", -1);
+            fprintf (output, "%d\n", HLT);
             break;
         }
         fprintf (stderr, "Invalid name for command: %s in file %s:%lu\n", cmd, argv [1], count_cmd);
