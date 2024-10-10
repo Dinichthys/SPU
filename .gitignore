@@ -1,0 +1,14 @@
+/.vscode
+
+*.o
+
+program.asm
+
+program_code.txt
+
+stack
+
+processor
+
+compiler
+

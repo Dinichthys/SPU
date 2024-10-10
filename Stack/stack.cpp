@@ -28,7 +28,7 @@ static const size_t CANARY = 1910;
 
 static const char POISON     = '@';    //  '@' == 64
 static const size_t MIN_SIZE = 100;
-static const size_t MAX_SIZE = 100000000;
+static const size_t MAX_SIZE = -1;     // size_t is unsigned that's why it will make maximum value of stack
 static const int STACK_SCALE = 2;
 static const size_t KEY      = (size_t) time (NULL);
 
@@ -507,7 +507,11 @@ enum STACK_ERROR stack_pop (const size_t stack_encode, stack_elem* const element
     }
 
     *element = stk->data [stk->size - 1];
-    stk->data [stk->size - 1] = POISON;
+    memcpy (stk->data + stk->size - 1, &POISON, sizeof (POISON));
+    if (sizeof (stack_elem) - sizeof (POISON) > 0)
+    {
+        memset ((char*) (stk->data + stk->size - 1) + sizeof (POISON), 0, sizeof (stack_elem) - sizeof (POISON));
+    }
     stk->size--;
 
     #ifdef HASH_PROT

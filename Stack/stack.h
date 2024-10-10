@@ -6,7 +6,7 @@
 //struct stack;
 //typedef struct stack stack_t;
 
-typedef double stack_elem;
+typedef long long stack_elem;
 
 #define STACK_INIT(stk, number)                                                         \
     size_t stk = 0;                                                                     \
