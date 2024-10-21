@@ -6,7 +6,8 @@
 //struct stack;
 //typedef struct stack stack_t;
 
-typedef long long stack_elem;
+typedef size_t stack_elem;
+typedef size_t stack_t;
 
 #define STACK_INIT(stk, number)                                                         \
     size_t stk = 0;                                                                     \
@@ -59,7 +60,7 @@ enum RESIZE_DIRECTION
     UP   = 1,
 };
 
-typedef struct stack_t
+struct stack
 { // TODO DEBUG
     const char* file;
 
@@ -81,7 +82,7 @@ typedef struct stack_t
     size_t hash_stack;
 
     #endif // HASH_PROT
-} stack;
+};
 
 enum STACK_ERROR stack_ctor (size_t* const stack_encode, const size_t num_elem,
                              const char* file, const int line, const char* func, const char* name);

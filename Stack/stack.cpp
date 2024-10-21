@@ -572,6 +572,8 @@ enum STACK_ERROR dump (const size_t stack_encode, const char* const file, const 
 
     #endif // HASH_PROT
 
+    fprintf (stderr, "%8.8b\n", 0); //ANCHOR
+
     if (stk->name == NULL)
     {
         fprintf (stderr, "\nStruct has invalid pointer for name but has own pointer");

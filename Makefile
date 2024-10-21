@@ -13,14 +13,13 @@ debug_stack: stack
 release_stack: CXXFLAGS= -D NDEBUG -lm
 release_stack: stack
 
-compiler: assembler.o
-	@g++ $(CXXFLAGS) assembler.o -o compiler
+compiler: main_assembler.o assembler.o logging.o print_error.o
+	@g++ $(CXXFLAGS) main_assembler.o assembler.o logging.o print_error.o -o compiler
 
 processor: stack spu.o
 	@g++ $(CXXFLAGS) spu.o stack.o hash.o -o processor
 
-stack: main.o stack.o hash.o
-	@g++ $(CXXFLAGS) main.o hash.o stack.o -o stack
+stack: stack.o hash.o
 
 main.o: main.cpp
 	@g++ $(CXXFLAGS) -c main.cpp
@@ -31,13 +30,22 @@ stack.o: Stack/stack.cpp
 hash.o: Stack/hash.cpp
 	@g++ $(CXXFLAGS) -c Stack/hash.cpp
 
+main_assembler.o: main_assembler.cpp
+	@g++ $(CXXFLAGS) -c main_assembler.cpp
+
 assembler.o: assembler.cpp
 	@g++ $(CXXFLAGS) -c assembler.cpp
 
 spu.o: spu.cpp
 	@g++ $(CXXFLAGS) -c spu.cpp
 
-clean: clean_compiler clean_processor
+logging.o: Logger/logging.cpp
+	@g++ $(CXXFLAGS) -c Logger/logging.cpp
+
+print_error.o: Assert/print_error.cpp
+	@g++ $(CXXFLAGS) -c Assert/print_error.cpp
+
+clean:
 	rm -rf *.o
 
 clean_compiler:
@@ -48,3 +56,4 @@ clean_processor:
 
 clean_stack:
 	rm hash.o stack.o stack
+

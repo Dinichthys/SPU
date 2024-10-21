@@ -1,192 +1,259 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-#include "assembler.h"
+#include "spu.h"
+#include "program.h"
 #include "Stack/stack.h"
 
-int main (const int argc, const char* argv[])
+static bool get_two_args (size_t* const first, size_t* const second, stack_t* const stk);
+
+#define CASE_JUMP(jump_cmd, sign)                                                                       \
+            case jump_cmd:                                                                              \
+            {                                                                                           \
+                size_t first  = 0;                                                                      \
+                size_t second = 0;                                                                      \
+                if (!(get_two_args (&first, &second, &processor.stk)))                                  \
+                {                                                                                       \
+                    fprintf (stderr, "There is no element in stack to do the command" #jump_cmd "\n");  \
+                    free (processor.code);                                                              \
+                    fclose  (input);                                                                    \
+                    STACK_DTOR (processor.stk);                                                         \
+                    return EXIT_FAILURE;                                                                \
+                }                                                                                       \
+                                                                                                        \
+                if (first sign second)                                                                     \
+                {                                                                                       \
+                    processor.ip = processor.code [processor.ip];                                       \
+                }                                                                                       \
+                else                                                                                    \
+                {                                                                                       \
+                    processor.ip++;                                                                     \
+                }                                                                                       \
+                                                                                                        \
+                break;                                                                                  \
+            }
+
+int main (const int argc, const char* const argv[])
 {
     if (argc != 2)
     {
         fprintf (stderr, "Incorrect number of files for programming\n");
     }
 
-    FILE* input = NULL;
-    input = fopen (argv [1], "r");
+    FILE* input = fopen (argv [1], "r+b");
     if (input == NULL)
     {
-        fprintf (stderr, "Can't open file %s\n", argv [1]);
+        perror ("Can't open file"); // NOTE
         return EXIT_FAILURE;
     }
 
-    STACK_INIT (stk, 100);
+    spu_t processor = {.count_cmd = 0, .ip = 0, .code = NULL, .stk = NULL};
 
-    size_t count_cmd = 0;
+    fread (&processor.count_cmd, 1, sizeof (processor.count_cmd), input);
 
-    while (true)
+    processor.code = (size_t*) calloc (processor.count_cmd, sizeof (size_t));
+    if (processor.code == NULL)
     {
-        enum ASSEMBLER cmd = 0;
-        if (fscanf (input, "%d", &cmd) != 1)
-        {
-            fprintf (stderr, "There is invalid program at the position %s:%lu\n", argv [1], count_cmd);
-            fclose  (input);
-            STACK_DTOR (stk);
-            return EXIT_FAILURE;
-        }
-        count_cmd++;
+        fprintf (stderr, "The program can't calloc memory for code\n");
+        fclose (input);
+        return EXIT_FAILURE;
+    }
+
+    STACK_INIT (stk, processor.count_cmd);
+
+    processor.stk = stk;
+
+    fread (processor.code, sizeof (size_t), processor.count_cmd, input);
+
+    while (processor.ip < processor.count_cmd)
+    {
+        enum COMMANDS cmd = (enum COMMANDS) processor.code [processor.ip];
+
+        processor.ip++;
 
         switch (cmd)
         {
             case PUSH:
             {
-                long long number = 0;
-                if (fscanf (input, "%lld", &number) != 1)
-                {
-                    fprintf (stderr, "There is no argument for push at the position %s:%lu\n", argv [1], count_cmd);
-                    fclose  (input);
-                    STACK_DTOR (stk);
-                    return EXIT_FAILURE;
-                }
-                stack_push (stk, number);
+                size_t number = processor.code [processor.ip];
+
+                processor.ip++;
+
+                stack_push (processor.stk, number);
+
+                break;
+            }
+            case PUSHR:
+            {
+                size_t number = processor.code [processor.ip];
+
+                processor.ip++;
+
+                stack_push (processor.stk, processor.regs [number]);
+
                 break;
             }
             case POP:
             {
-                long long number = 0;
-                if (stack_pop (stk, &number) == CANT_POP)
+                size_t number = processor.code [processor.ip];
+
+                processor.ip++;
+
+                if (number == 0)
                 {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
+                    continue;
+                }
+
+                if (stack_pop (processor.stk, &(processor.regs [number])) == CANT_POP)
+                {
+                    fprintf (stderr, "There is no element in stack to do the command\n");
+                    free (processor.code);
                     fclose  (input);
-                    STACK_DTOR (stk);
+                    STACK_DTOR (processor.stk);
                     return EXIT_FAILURE;
                 }
+
                 break;
             }
             case ADD:
             {
-                long long a = 0;
-                if (stack_pop (stk, &a) == CANT_POP)
+                size_t first  = 0;
+                size_t second = 0;
+
+                if (!(get_two_args (&first, &second, &processor.stk)))
                 {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
+                    fprintf (stderr, "There is no element in stack to do the command\n");
+                    free (processor.code);
                     fclose  (input);
-                    STACK_DTOR (stk);
+                    STACK_DTOR (processor.stk);
                     return EXIT_FAILURE;
                 }
-                long long b = 0;
-                if (stack_pop (stk, &b) == CANT_POP)
-                {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
-                    fclose  (input);
-                    STACK_DTOR (stk);
-                    return EXIT_FAILURE;
-                }
-                stack_push (stk, a + b);
+                stack_push (processor.stk, first + second);
                 break;
             }
             case SUB:
             {
-                long long a = 0;
-                if (stack_pop (stk, &a) == CANT_POP)
+                size_t first  = 0;
+                size_t second = 0;
+                if (!(get_two_args (&first, &second, &processor.stk)))
                 {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
+                    fprintf (stderr, "There is no element in stack to do the command\n");
+                    free (processor.code);
                     fclose  (input);
-                    STACK_DTOR (stk);
+                    STACK_DTOR (processor.stk);
                     return EXIT_FAILURE;
                 }
-                long long b = 0;
-                if (stack_pop (stk, &b) == CANT_POP)
-                {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
-                    fclose  (input);
-                    STACK_DTOR (stk);
-                    return EXIT_FAILURE;
-                }
-                stack_push (stk, a - b);
+                stack_push (processor.stk, first - second);
                 break;
             }
             case MUL:
             {
-                long long a = 0;
-                if (stack_pop (stk, &a) == CANT_POP)
+                size_t first  = 0;
+                size_t second = 0;
+                if (!(get_two_args (&first, &second, &processor.stk)))
                 {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
+                    fprintf (stderr, "There is no element in stack to do the command\n");
+                    free (processor.code);
                     fclose  (input);
-                    STACK_DTOR (stk);
+                    STACK_DTOR (processor.stk);
                     return EXIT_FAILURE;
                 }
-                long long b = 0;
-                if (stack_pop (stk, &b) == CANT_POP)
-                {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
-                    fclose  (input);
-                    STACK_DTOR (stk);
-                    return EXIT_FAILURE;
-                }
-                stack_push (stk, a * b);
+                stack_push (processor.stk, first * second);
                 break;
             }
             case DIV:
             {
-                long long a = 0;
-                if (stack_pop (stk, &a) == CANT_POP)
+                size_t first = 0;
+                size_t second = 0;
+                if (!(get_two_args (&first, &second, &processor.stk)))
                 {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
+                    fprintf (stderr, "There is no element in stack to do the command\n");
+                    free (processor.code);
                     fclose  (input);
-                    STACK_DTOR (stk);
+                    STACK_DTOR (processor.stk);
                     return EXIT_FAILURE;
                 }
-                long long b = 0;
-                if (stack_pop (stk, &b) == CANT_POP)
+                if (second == 0)
                 {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
+                    fprintf (stderr, "Can't divide on zero in command\n");
+                    free (processor.code);
                     fclose  (input);
-                    STACK_DTOR (stk);
+                    STACK_DTOR (processor.stk);
                     return EXIT_FAILURE;
                 }
-                if (b == 0)
-                {
-                    fprintf (stderr, "Can't divide on zero in command %s:%lu\n", argv [1], count_cmd);
-                    fclose  (input);
-                    STACK_DTOR (stk);
-                    return EXIT_FAILURE;
-                }
-                stack_push (stk, a / b);
+                stack_push (processor.stk, first / second);
                 break;
             }
             case OUT:
             {
-                long long number = 0;
-                if (stack_pop (stk, &number) == CANT_POP)
+                size_t number = 0;
+                if (stack_pop (processor.stk, &number) == CANT_POP)
                 {
-                    fprintf (stderr, "There is no element in stack to do the command %s:%lu\n", argv [1], count_cmd);
+                    fprintf (stderr, "There is no element in stack to do the command\n");
+                    free (processor.code);
                     fclose  (input);
-                    STACK_DTOR (stk);
+                    STACK_DTOR (processor.stk);
                     return EXIT_FAILURE;
                 }
-                fprintf (stdout, "%lld\n", number);
+                fprintf (stdout, "%lu\n", number);
                 break;
             }
             case DUMP:
             {
-                DUMP (stk);
+                DUMP (processor.stk);
                 break;
             }
+            case JMP:
+            {
+                processor.ip = processor.code [processor.ip];
+                fprintf (stderr, "ip = %lu\n", processor.ip);
+                break;
+            }
+            CASE_JUMP (JA,  > );
+            CASE_JUMP (JAE, >=);
+            CASE_JUMP (JB,  < );
+            CASE_JUMP (JBE, <=);
+            CASE_JUMP (JE,  ==);
+            CASE_JUMP (JNE, !=);
             case HLT:
             {
+                free (processor.code);
+                STACK_DTOR (processor.stk);
                 fclose (input);
-                STACK_DTOR (stk);
                 return EXIT_SUCCESS;
             }
             default:
             {
-                fprintf (stderr, "There is undefined command %s:%lu\n", argv [1], count_cmd);
+                fprintf (stderr, "There is undefined command %lu with number %lu\n", cmd, processor.ip);
+                free (processor.code);
                 fclose  (input);
-                STACK_DTOR (stk);
+                STACK_DTOR (processor.stk);
                 return EXIT_FAILURE;
             }
         }
     }
+
+    free (processor.code);
+    STACK_DTOR (processor.stk);
     fclose (input);
-    STACK_DTOR (stk);
-    return EXIT_SUCCESS; // atexit (void (*function) (void))
+    return EXIT_SUCCESS;
+}
+
+static bool get_two_args (size_t* const first, size_t* const second, stack_t* const stk)
+{
+    assert (first  != NULL);
+    assert (second != NULL);
+    assert (stk    != NULL);
+
+    if (stack_pop (*stk, first) == CANT_POP)
+    {
+        return false;
+    }
+    if (stack_pop (*stk, second) == CANT_POP)
+    {
+        return false;
+    }
+
+    return true;
 }

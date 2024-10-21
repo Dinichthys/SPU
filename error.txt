@@ -1,0 +1,742 @@
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2e0
+
+
+[DEBUG] 
+assembler.cpp:152 (jumper) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+The function jumper got arguments:
+| cmd = 0x74a93f609080 | assembler = 0x74a93fc09020 | input = 0x515000000300 |
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeece0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeed60
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeeda0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeede0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeee20
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeee60
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeeea0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef320
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2e0
+
+
+[DEBUG] 
+assembler.cpp:152 (jumper) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+The function jumper got arguments:
+| cmd = 0x74a93f609080 | assembler = 0x74a93fc09020 | input = 0x515000000300 |
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeece0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeed60
+
+
+[DEBUG] 
+assembler.cpp:213 (label_num) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function label_num got argument:
+label = 0x74a93f9098e0
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93fc09020 s2 = 0x74a93f9098e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef2e0
+
+
+[DEBUG] 
+assembler.cpp:152 (jumper) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+The function jumper got arguments:
+| cmd = 0x74a93f609080 | assembler = 0x74a93fc09020 | input = 0x515000000300 |
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeece0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeed60
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeeda0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeede0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeee20
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeee60
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aeeea0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f609080 s2 = 0x5b2d13aef320
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2e0
+
+
+[DEBUG] 
+assembler.cpp:152 (jumper) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+The function jumper got arguments:
+| cmd = 0x74a93f60cf80 | assembler = 0x74a93fc09020 | input = 0x515000000300 |
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeece0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeed60
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeeda0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeede0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeee20
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeee60
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeeea0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef320
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2e0
+
+
+[DEBUG] 
+assembler.cpp:152 (jumper) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+The function jumper got arguments:
+| cmd = 0x74a93f60cf80 | assembler = 0x74a93fc09020 | input = 0x515000000300 |
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeece0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeed60
+
+
+[DEBUG] 
+assembler.cpp:213 (label_num) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function label_num got argument:
+label = 0x74a93f90b0e0
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93fc09020 s2 = 0x74a93f90b0e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef0a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef1e0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef220
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef260
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2a0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef2e0
+
+
+[DEBUG] 
+assembler.cpp:152 (jumper) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+The function jumper got arguments:
+| cmd = 0x74a93f60cf80 | assembler = 0x74a93fc09020 | input = 0x515000000300 |
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeece0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeed60
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeeda0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeede0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeee20
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeee60
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aeeea0
+
+
+[DEBUG] 
+assembler.cpp:173 (my_strcmp) 39 sec 52 min 23 hours 21 days 10 month 2024 year
+Function my_strcmp got arguments:
+s1 = 0x74a93f60cf80 s2 = 0x5b2d13aef320
+
+
