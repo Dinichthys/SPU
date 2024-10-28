@@ -156,22 +156,12 @@ enum ASSEMBLER_ERROR asm_ctor (assembler_t* const assembler, const char* argv[])
         return CANT_CTOR_ASM;
     }
 
-    assembler->output = NULL;
-    FOPEN (assembler->output, argv [2], "w+b");
-    if (assembler->output == NULL)
-    {
-        fclose (input);
-        input = NULL;
-        return CANT_CTOR_ASM;
-    }
-
     size_t size_code = size_of_file (input);
 
     assembler->code = (command_t*) calloc (size_code, sizeof (size_t));
     if (assembler->code == NULL)
     {
-        fclose (input);
-        input = NULL;
+        FCLOSE (input);
         return CANT_CTOR_ASM;
     }
 
@@ -180,8 +170,7 @@ enum ASSEMBLER_ERROR asm_ctor (assembler_t* const assembler, const char* argv[])
     assembler->input_buffer = (char*) calloc (size_code, sizeof (char));
     if (assembler->input_buffer == NULL)
     {
-        fclose (input);
-        input = NULL;
+        FCLOSE (input);
         return CANT_CTOR_ASM;
     }
 
@@ -202,18 +191,27 @@ enum ASSEMBLER_ERROR asm_dtor (assembler_t* const assembler)
     free (assembler->code);
     assembler->count_cmd = 0;
     free (assembler->input_buffer);
-    FCLOSE (assembler->output);
     assembler->input_offset = 0;
 
     return DONE_ASM;
 }
 
-void write_result (assembler_t* const assembler)
+enum ASSEMBLER_ERROR write_result (assembler_t* const assembler)
 {
     ASSERT (assembler != NULL, "Invalid argument for write_result assembler = %p\n", assembler);
 
-    fwrite (&(assembler->count_cmd), 1, sizeof (assembler->count_cmd), assembler->output);
-    fwrite (assembler->code, sizeof (command_t), assembler->count_cmd, assembler->output);
+    FILE* output_file = NULL;
+
+    FOPEN (output_file, assembler->output, "w+b");
+    if (assembler->output == NULL)
+    {
+        return CANT_WRITE_RESULT_ASM;
+    }
+
+    fwrite (&(assembler->count_cmd), 1, sizeof (assembler->count_cmd), output_file);
+    fwrite (assembler->code, sizeof (command_t), assembler->count_cmd, output_file);
+
+    return DONE_ASM;
 }
 
 static enum ASSEMBLER_ERROR push_cmd (assembler_t* const assembler)

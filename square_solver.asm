@@ -1,10 +1,10 @@
 in
+pop bx
 in
+pop cx
 in
 pop dx
-pop cx
-pop bx
-
+call no_root:
 push bx
 push 0
 
@@ -129,7 +129,8 @@ linear:
         ret
 
 no_root:
-push 10
+push 13
+push 115
 push 116
 push 111
 push 111
@@ -167,7 +168,7 @@ push 1
 add
 pop ex
 push ex
-push 20
+push 30
 ja for_no_root:
 draw
 ret

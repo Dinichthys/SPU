@@ -39,7 +39,7 @@ int main (const int argc, const char* argv[])
     assembler_t assembler = {.labels = {}, .labels_size = 0,
                              .code = NULL, .count_cmd = 0,
                              .input_buffer = NULL, .input_offset = 0,
-                             .output = NULL};
+                             .output = argv [2]};
 
     enum ASSEMBLER_ERROR result = asm_ctor (&assembler, argv);
 
@@ -68,9 +68,14 @@ int main (const int argc, const char* argv[])
     }
 
     // NOTE вынести в функцию
-    write_result (&assembler);
+    result = write_result (&assembler);
 
-    asm_dtor (&assembler);
+    ERROR_HANDLER (result);
+
+    result = asm_dtor (&assembler);
+
+    ERROR_HANDLER (result);
+
     fclose   (error_file);
 
     return (program_success) ? EXIT_SUCCESS : EXIT_FAILURE;

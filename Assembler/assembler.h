@@ -17,13 +17,14 @@ static const char* REGISTERS [COUNT_REGS] = {"ax", "bx", "cx", "dx", "ex", "fx",
 
 enum ASSEMBLER_ERROR
 {
-    DONE_ASM      = 0,
-    PUSH_NO_ARG   = 1,
-    POP_INVAL_ARG = 2,
-    INVAL_REG     = 3,
-    INVAL_COMMAND = 4,
-    CANT_CTOR_ASM = 5,
-    CANT_DTOR_ASM = 6,
+    DONE_ASM              = 0,
+    PUSH_NO_ARG           = 1,
+    POP_INVAL_ARG         = 2,
+    INVAL_REG             = 3,
+    INVAL_COMMAND         = 4,
+    CANT_CTOR_ASM         = 5,
+    CANT_DTOR_ASM         = 6,
+    CANT_WRITE_RESULT_ASM = 7,
 };
 
 typedef struct label
@@ -47,12 +48,12 @@ typedef struct assembler
 
     size_t input_offset;
 
-    FILE* output; // FIXME лучше таскать const char* чтоб в конце открыть и сразу записать
+    const char* output; // NOTE лучше таскать const char* чтоб в конце открыть и сразу записать
 } assembler_t;
 
-enum ASSEMBLER_ERROR compile (assembler_t* const assembler);
-enum ASSEMBLER_ERROR asm_ctor (assembler_t* const assembler, const char* argv[]);
-enum ASSEMBLER_ERROR asm_dtor (assembler_t* const assembler);
-void write_result (assembler_t* const assembler);
+enum ASSEMBLER_ERROR compile      (assembler_t* const assembler);
+enum ASSEMBLER_ERROR asm_ctor     (assembler_t* const assembler, const char* argv[]);
+enum ASSEMBLER_ERROR asm_dtor     (assembler_t* const assembler);
+enum ASSEMBLER_ERROR write_result (assembler_t* const assembler);
 
 #endif // ASSEMBLER_H_
