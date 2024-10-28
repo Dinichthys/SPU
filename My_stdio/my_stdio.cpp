@@ -8,7 +8,6 @@
 #include "../Logger/logging.h"
 #include "../Assert/my_assert.h"
 
-// NOTE вынести СУКА!!!
 int my_strcmp (const char* const s1, const char* const s2)
 {
     ASSERT (s1 != NULL, "Invalid pointer s1 for function %s\n", __FUNCTION__);
@@ -45,7 +44,6 @@ size_t skip_space_symbols (char* const string, const size_t offset)
     return new_offset;
 }
 
-// NOTE это что за пиздец почему статик между внешними функция
 size_t size_of_file (FILE* const input)
 {
     ASSERT (input != NULL, "Invalid argument for function size_of_file\n");

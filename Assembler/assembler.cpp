@@ -10,8 +10,6 @@
 #include "../Assert/my_assert.h"
 #include "../Logger/logging.h"
 
-// NOTE вынести в папки(без мамок)
-
 static int register_num (char name [REG_NAME_LEN]);
 static size_t label_num (char label [LABEL_NAME_LEN], assembler_t* const assembler);
 static enum ASSEMBLER_ERROR push_cmd (assembler_t* const assembler);
@@ -31,8 +29,6 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
 
     while (true)
     {
-        // NOTE вынести 30 в константу(можно даже локальную)
-
         char cmd [CMD_NAME_LEN] = "";
 
         if (sscanf (assembler->input_buffer + assembler->input_offset, "%s", cmd) == EOF)
@@ -139,18 +135,18 @@ static size_t label_num (char label [LABEL_NAME_LEN], assembler_t* const assembl
     return (size_t) -1;
 }
 
-enum ASSEMBLER_ERROR asm_ctor (assembler_t* const assembler, const char* argv[])
+enum ASSEMBLER_ERROR asm_ctor (assembler_t* const assembler, const char* name_input)
 {
     ASSERT (assembler != NULL,
             "Invalid argument for constructor of the assembler (asm) with pointer %p\n", assembler);
-    ASSERT (argv != NULL,
-            "Invalid argument for constructor of the assembler (argv) with pointer %p\n", assembler);
+    ASSERT (name_input != NULL,
+            "Invalid argument for constructor of the assembler (name_input) with pointer %p\n", name_input);
 
     memset (assembler->labels, 0, NUMBER_LABELS * sizeof (assembler->labels [0]));
     assembler->labels_size = 0;
 
     FILE* input = NULL;
-    FOPEN (input, argv [1], "r");
+    FOPEN (input, name_input, "r");
     if (input == NULL)
     {
         return CANT_CTOR_ASM;

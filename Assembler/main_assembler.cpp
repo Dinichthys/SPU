@@ -4,8 +4,6 @@
 #include "assembler.h"
 #include "../Logger/logging.h"
 
-// NOTE разнести по папкам
-
 #define ERROR_HANDLER(error)                                                                            \
     if (error != DONE_ASM)                                                                              \
     {                                                                                                   \
@@ -41,7 +39,8 @@ int main (const int argc, const char* argv[])
                              .input_buffer = NULL, .input_offset = 0,
                              .output = argv [2]};
 
-    enum ASSEMBLER_ERROR result = asm_ctor (&assembler, argv);
+    // FIXME не передавать argv, че за нах
+    enum ASSEMBLER_ERROR result = asm_ctor (&assembler, argv [1]);
 
     ERROR_HANDLER (result);
 
@@ -67,7 +66,6 @@ int main (const int argc, const char* argv[])
         }
     }
 
-    // NOTE вынести в функцию
     result = write_result (&assembler);
 
     ERROR_HANDLER (result);

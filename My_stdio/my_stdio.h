@@ -8,7 +8,6 @@
 #include "../Logger/logging.h"
 #include "../Assert/my_assert.h"
 
-// NOTE вынести СУКА!!!
 int my_strcmp (const char* const s1, const char* const s2);
 size_t skip_space_symbols (char* const string, const size_t offset);
 size_t size_of_file (FILE* const input);

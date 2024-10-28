@@ -13,7 +13,7 @@ static const int LABEL_NAME_LEN   = 100;
 static const int NUMBER_LABELS    = 100;
 static const char* REGISTERS [COUNT_REGS] = {"ax", "bx", "cx", "dx", "ex", "fx", "gx", "hx", "ix", "jx"};
 
-// NOTE делай функции + квадратка на асме
+// NOTE квадратка на асме + графика(без граф либы) + readme -> 7
 
 enum ASSEMBLER_ERROR
 {
@@ -48,11 +48,11 @@ typedef struct assembler
 
     size_t input_offset;
 
-    const char* output; // NOTE лучше таскать const char* чтоб в конце открыть и сразу записать
+    const char* output;
 } assembler_t;
 
 enum ASSEMBLER_ERROR compile      (assembler_t* const assembler);
-enum ASSEMBLER_ERROR asm_ctor     (assembler_t* const assembler, const char* argv[]);
+enum ASSEMBLER_ERROR asm_ctor     (assembler_t* const assembler, const char* name_input);
 enum ASSEMBLER_ERROR asm_dtor     (assembler_t* const assembler);
 enum ASSEMBLER_ERROR write_result (assembler_t* const assembler);
 

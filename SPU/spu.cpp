@@ -1,4 +1,4 @@
-#include "spu.h" // NOTE хедер модуля пишется первым
+#include "spu.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,7 +50,6 @@ enum SPU_ERROR processing (spu_t* const processor)
 
     while (processor->ip < processor->count_cmd)
     {
-        // FIXME вынести весь switch в функцию
         command_t cmd_and_arg = processor->code [processor->ip];
         command_t cmd = (cmd_and_arg >> ARGUMENT_TYPE);
         command_t arg = (cmd_and_arg & ALL_ARGS);
@@ -252,7 +251,6 @@ enum SPU_ERROR spu_ctor (spu_t* const processor, const char* const name_file_inp
         return CANT_CTOR_SPU;
     }
 
-    // NOTE написать обёртку над fopen fclose чтоб логировались открытия и закрытия, чтоб можно было ловить проёбы
     fread (processor->code, sizeof (command_t), processor->count_cmd, input);
     FCLOSE (input);
 
@@ -339,7 +337,7 @@ static enum SPU_ERROR push_cmd (const command_t argument, spu_t* const processor
 
     if (argument & RAM)
     {
-        sleep (SLEEP_IN_RAM);
+        sleep (SLEEP_IN_RAM); //roflanEbalo - ахахаха, я поржал (вова)
 
         if (number >= RAM_SIZE)
         {
