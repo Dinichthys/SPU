@@ -15,8 +15,8 @@ size_t size_of_file (FILE* const input);
 
 #define FOPEN(file, name, mode)                                                     \
 {                                                                                   \
-    LOG (DEBUG, "File with name \"%s\" and pointer [%p] was opened\n", name, file); \
     file = fopen (name, mode);                                                      \
+    LOG (DEBUG, "File with name \"%s\" and pointer [%p] was opened\n", name, file); \
 }
 
 #define FCLOSE(file)                                            \

@@ -1,7 +1,10 @@
+#include "spu.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "spu.h"
+#include "../Logger/logging.h"
+#include "../My_stdio/my_stdio.h"
 
 #define ERROR_HANDLER(error)                                                                            \
     if (error != DONE_SPU)                                                                              \
@@ -15,9 +18,19 @@
 
 int main (const int argc, const char* argv[])
 {
+    FILE* const error_file = fopen ("error.txt", "w");
+    if (error_file == NULL)
+    {
+        fprintf (stderr, "Can't start logging\n");
+        return EXIT_FAILURE;
+    }
+    set_log_file (error_file);
+    set_log_lvl (DEBUG);
+
     if (argc != 2)
     {
         fprintf (stderr, "Incorrect number of files for programming\n");
+        fclose (error_file);
         return EXIT_FAILURE;
     }
 
@@ -35,6 +48,8 @@ int main (const int argc, const char* argv[])
     result = spu_dtor (&processor);
 
     ERROR_HANDLER (result);
+
+    fclose (error_file);
 
     return EXIT_SUCCESS;
 }

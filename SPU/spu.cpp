@@ -9,6 +9,7 @@
 #include "../program.h"
 #include "../Stack/stack.h"
 #include "../Assert/my_assert.h"
+#include "../Logger/logging.h"
 #include "../My_stdio/my_stdio.h"
 
 static bool get_two_args (stack_elem* const first, stack_elem* const second, stack_t* const stk);

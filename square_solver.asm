@@ -9,120 +9,124 @@ push bx
 push 0
 
 jne else_linear:
+
     call linear:
+
     hlt
+
 else_linear:
 
-    push cx
-    push cx
-    mul
+    push cx   push cx   mul
 
-    push 4
-    push bx
-    mul
-    push dx
-    mul
-    push -1
-    mul
+    push -1   push 4    mul   push bx   mul   push dx  mul
 
     add
 
     pop dx
+
     push dx
     push 0
 
     ja no_roots_end:
 
-    push dx
+        push dx
 
-    sqrt
-    pop dx
+        sqrt
+        pop dx
 
-    push dx
+        push dx
 
-    push cx
-    push -1
-    mul
+        push -1   push cx   mul
 
-    sub
+        sub
 
-    push 2
-    push bx
-    mul
+        push 2    push bx   mul
 
-    div
+        div
 
-    pop [0]
+            pop [0]
 
-    push dx
+        push dx
 
-    push cx
-    push -1
-    mul
+        push -1   push cx   mul
 
-    add
+        add
 
-    push 2
-    push bx
-    mul
+        push 2    push bx   mul
 
-    div
+        div
 
-    pop [1]
+            pop [1]
 
-    push [1]
-    push [0]
-    je one_root_bx_n_0:
+        push [1]
+        push [0]
 
-    push 2
-    out
-    push [0]
-    out
-    push [1]
-    out
-    hlt
-    one_root_bx_n_0:
-    push 1
-    out
-    push [0]
-    out
-    hlt
+        je one_root_bx_n_0:
+
+            push 2
+            out
+
+            push [0]
+            out
+
+            push [1]
+            out
+                hlt
+
+        one_root_bx_n_0:
+
+            push 1
+            out
+
+            push [0]
+            out
+                hlt
 
 no_roots_end:
-push 0
-out
-hlt
+
+    push 0
+    out
+        hlt
 
 linear:
 
-push cx
-push 0
-
-jne else_linear_cx_0:
-    push dx
-    push 0
-
-    jne else_linear_dx_0:
-        push 0
-        out
-        jmp end_else_linear_dx_0:
-    else_linear_dx_0:
-        push 426.426
-        out
-    end_else_linear_dx_0:
-    ret
-else_linear_cx_0:
-    push 1
-    out
     push cx
-    push dx
-    div
-    push 1
     push 0
-    sub
-    mul
-    out
-    ret
+
+    jne else_linear_cx_0:
+
+        push dx
+        push 0
+
+        jne else_linear_dx_0:
+
+            push 777.777
+            out
+
+            jmp end_else_linear_dx_0:
+
+        else_linear_dx_0:
+
+            push 426.426
+            out
+
+        end_else_linear_dx_0:
+
+            ret
+
+    else_linear_cx_0:
+
+        push 1
+        out
+
+        push cx   push dx   div
+
+        push -1
+
+        mul
+
+        out
+        ret
 
 no_root:
 push 10
