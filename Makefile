@@ -13,16 +13,15 @@ debug_stack: stack
 release_stack: CXXFLAGS= -D NDEBUG -lm
 release_stack: stack
 
-compiler: main_assembler.o assembler.o logging.o print_error.o
-	@g++ $(CXXFLAGS) main_assembler.o assembler.o logging.o print_error.o -o compiler
+compiler: my_stdio.o main_assembler.o assembler.o logging.o print_error.o
+	@g++ $(CXXFLAGS) main_assembler.o assembler.o my_stdio.o logging.o print_error.o -o compiler
 
-processor: stack spu.o
-	@g++ $(CXXFLAGS) spu.o stack.o hash.o -o processor
+processor: stack main_spu.o spu.o logging.o print_error.o
+	@g++ $(CXXFLAGS) main_spu.o spu.o stack.o hash.o logging.o print_error.o -o processor
+
 
 stack: stack.o hash.o
-
-main.o: main.cpp
-	@g++ $(CXXFLAGS) -c main.cpp
+	@
 
 stack.o: Stack/stack.cpp
 	@g++ $(CXXFLAGS) -c Stack/stack.cpp
@@ -30,14 +29,22 @@ stack.o: Stack/stack.cpp
 hash.o: Stack/hash.cpp
 	@g++ $(CXXFLAGS) -c Stack/hash.cpp
 
-main_assembler.o: main_assembler.cpp
-	@g++ $(CXXFLAGS) -c main_assembler.cpp
 
-assembler.o: assembler.cpp
-	@g++ $(CXXFLAGS) -c assembler.cpp
+my_stdio.o: My_stdio/my_stdio.cpp
+	@g++ $(CXXFLAGS) -c My_stdio/my_stdio.cpp
 
-spu.o: spu.cpp
-	@g++ $(CXXFLAGS) -c spu.cpp
+
+main_assembler.o: Assembler/main_assembler.cpp
+	@g++ $(CXXFLAGS) -c Assembler/main_assembler.cpp
+
+assembler.o: Assembler/assembler.cpp
+	@g++ $(CXXFLAGS) -c Assembler/assembler.cpp
+
+main_spu.o: SPU/main_spu.cpp
+	@g++ $(CXXFLAGS) -c SPU/main_spu.cpp
+
+spu.o: SPU/spu.cpp
+	@g++ $(CXXFLAGS) -c SPU/spu.cpp
 
 logging.o: Logger/logging.cpp
 	@g++ $(CXXFLAGS) -c Logger/logging.cpp

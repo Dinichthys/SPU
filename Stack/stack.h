@@ -1,32 +1,46 @@
 #ifndef STACK_H
 #define STACK_H
 
+#include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 //struct stack;
 //typedef struct stack stack_t;
 
-typedef size_t stack_elem;
+typedef double stack_elem;
 typedef size_t stack_t;
 
 #define STACK_INIT(stk, number)                                                         \
     size_t stk = 0;                                                                     \
     if (stack_ctor (&(stk), (number), __FILE__, __LINE__, __FUNCTION__, #stk) != DONE)  \
     {                                                                                   \
-        fprintf (stderr, "CANT_CREAT\n");                                               \
+        fprintf (stderr, "Can't create stack "                                          \
+                         #stk                                                           \
+                         " at the position %s:%d in function (%s)\n",                   \
+                         __FILE__, __LINE__, __FUNCTION__);                             \
         return EXIT_FAILURE;                                                            \
     }
 
 
-#define STACK_DTOR(stk)                     \
-{                                           \
-    if (stack_dtor (stk) != DONE)           \
-    {                                       \
-        fprintf (stderr, "CANT_DESTROY\n"); \
-        return EXIT_FAILURE;                \
-    }                                       \
-    stk = 0;                                \
+#define STACK_INIT_SHORT(stk, number)                                                   \
+    stack_ctor (&(stk), (number), __FILE__, __LINE__, __FUNCTION__, #stk)
+
+#define STACK_DTOR(stk)                                                                 \
+{                                                                                       \
+    if (stack_dtor (stk) != DONE)                                                       \
+    {                                                                                   \
+        fprintf (stderr, "Can't destroy stack "                                         \
+                         #stk                                                           \
+                         " at the position %s:%d in function (%s)\n",                   \
+                         __FILE__, __LINE__, __FUNCTION__);                             \
+        return EXIT_FAILURE;                                                            \
+    }                                                                                   \
+    stk = 0;                                                                            \
 }
+
+#define STACK_DTOR_SHORT(stk)                                                                 \
+    stack_dtor (stk)
 
 #define DUMP(stk)  dump ((stk), __FILE__, __LINE__)
 
@@ -61,7 +75,7 @@ enum RESIZE_DIRECTION
 };
 
 struct stack
-{ // TODO DEBUG
+{
     const char* file;
 
     int line;

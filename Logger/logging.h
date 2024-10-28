@@ -4,11 +4,11 @@
 #include <stdio.h>
 #include <time.h>
 
-#define LOG(level, ...)                                                                  \
+#define LOG(level, ...)                                                                                  \
     do                                                                                                   \
     {                                                                                                    \
         time_t seconds = time (NULL);                                                                    \
-        Log ({__FILE__, __func__, __LINE__, localtime(&seconds)}, level, __VA_ARGS__); \
+        Log ({__FILE__, __func__, __LINE__, localtime(&seconds)}, level, __VA_ARGS__);                   \
     } while (0)
 
 enum LEVEL_LOG
