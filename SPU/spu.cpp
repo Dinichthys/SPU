@@ -9,6 +9,7 @@
 #include "../program.h"
 #include "../Stack/stack.h"
 #include "../Assert/my_assert.h"
+#include "../My_stdio/my_stdio.h"
 
 static bool get_two_args (stack_elem* const first, stack_elem* const second, stack_t* const stk);
 static enum SPU_ERROR push_cmd (const command_t argument, spu_t* const processor);
@@ -233,7 +234,8 @@ enum SPU_ERROR spu_ctor (spu_t* const processor, const char* const name_file_inp
     ASSERT (processor       != NULL, "Invalid argument for spu_ctor processor = %p\n", processor);
     ASSERT (name_file_input != NULL, "Invalid argument for spu_ctor name_file_input = %p\n", name_file_input);
 
-    FILE* input = fopen (name_file_input, "r+b");
+    FILE* input = NULL;
+    FOPEN (input, name_file_input, "r+b");
     if (input == NULL)
     {
         return CANT_CTOR_SPU;
@@ -249,10 +251,9 @@ enum SPU_ERROR spu_ctor (spu_t* const processor, const char* const name_file_inp
         return CANT_CTOR_SPU;
     }
 
-    // FIXME написать обёртку над fopen fclose чтоб логировались открытия и закрытия, чтоб можно было ловить проёбы
+    // NOTE написать обёртку над fopen fclose чтоб логировались открытия и закрытия, чтоб можно было ловить проёбы
     fread (processor->code, sizeof (command_t), processor->count_cmd, input);
-    fclose (input);
-    input = NULL;
+    FCLOSE (input);
 
     memset (processor->regs, 0, COUNT_REGS * sizeof (processor->regs [0]));
 

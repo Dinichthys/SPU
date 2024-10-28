@@ -149,13 +149,15 @@ enum ASSEMBLER_ERROR asm_ctor (assembler_t* const assembler, const char* argv[])
     memset (assembler->labels, 0, NUMBER_LABELS * sizeof (assembler->labels [0]));
     assembler->labels_size = 0;
 
-    FILE* input = fopen (argv [1], "r");
+    FILE* input = NULL;
+    FOPEN (input, argv [1], "r");
     if (input == NULL)
     {
         return CANT_CTOR_ASM;
     }
 
-    assembler->output = fopen (argv [2], "w+b");
+    assembler->output = NULL;
+    FOPEN (assembler->output, argv [2], "w+b");
     if (assembler->output == NULL)
     {
         fclose (input);
@@ -184,8 +186,7 @@ enum ASSEMBLER_ERROR asm_ctor (assembler_t* const assembler, const char* argv[])
     }
 
     fread (assembler->input_buffer, sizeof (char), size_code, input);
-    fclose (input);
-    input = NULL;
+    FCLOSE (input);
 
     assembler->input_offset = 0;
 
@@ -201,7 +202,7 @@ enum ASSEMBLER_ERROR asm_dtor (assembler_t* const assembler)
     free (assembler->code);
     assembler->count_cmd = 0;
     free (assembler->input_buffer);
-    fclose (assembler->output);
+    FCLOSE (assembler->output);
     assembler->input_offset = 0;
 
     return DONE_ASM;
