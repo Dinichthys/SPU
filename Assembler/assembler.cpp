@@ -36,6 +36,32 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
             break;
         }
 
+        if (cmd [0] == COMMENT_SYMBOL)
+        {
+            char* comment_end = strchr (assembler->input_buffer + assembler->input_offset, '\n');
+
+            if (comment_end == NULL)
+            {
+                break;
+            }
+
+            LOG (DEBUG, "Offset = %lu \n"
+                        "Pointer on the end of comment = %p \n"
+                        "Pointer on the buffer = %p\n"
+                        "New offset = %lu\n"
+                        "Char code = %d\n",
+                        assembler->input_offset,
+                        comment_end, assembler->input_buffer,
+                        comment_end - assembler->input_buffer + 1,
+                        *comment_end);
+
+            assembler->input_offset = comment_end - assembler->input_buffer + 1;
+
+            LOG (DEBUG, "Commentation %s with offset %lu\n", cmd, assembler->input_offset);
+
+            continue;
+        }
+
         (assembler->input_offset) += strlen (cmd);
 
         assembler->input_offset = skip_space_symbols (assembler->input_buffer, assembler->input_offset);

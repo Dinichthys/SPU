@@ -6,6 +6,7 @@
 
 #include "../program.h"
 
+static const char COMMENT_SYMBOL  = ';';
 static const int STR_ARGUMENT_LEN = 40;
 static const int CMD_NAME_LEN     = 40;
 static const int REG_NAME_LEN     = 5;

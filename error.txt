@@ -1,10 +1,10 @@
 [DEBUG] 
-SPU/spu.cpp:239 (spu_ctor) 43 sec 15 min 0 hours 29 days 10 month 2024 year
+SPU/spu.cpp:239 (spu_ctor) 42 sec 45 min 22 hours 5 days 11 month 2024 year
 File with name "program_code.txt" and pointer [0x515000000300] was opened
 
 
 [DEBUG] 
-SPU/spu.cpp:257 (spu_ctor) 43 sec 15 min 0 hours 29 days 10 month 2024 year
+SPU/spu.cpp:256 (spu_ctor) 42 sec 45 min 22 hours 5 days 11 month 2024 year
 File with pointer [0x515000000300] was closed
 
 

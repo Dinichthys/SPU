@@ -24,7 +24,7 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor);
         stack_elem second = 0;                                                                  \
         if (!(get_two_args (&first, &second, &(processor->stk))))                               \
         {                                                                                       \
-            fprintf (stderr, "There is no element in stack to do the command" #jump_cmd "\n");  \
+            fprintf (stderr, "There is no element in stack to do the command " #jump_cmd "\n"); \
             return CANT_ ## jump_cmd ## _SPU;                                                   \
         }                                                                                       \
                                                                                                 \
@@ -206,6 +206,7 @@ enum SPU_ERROR processing (spu_t* const processor)
                 memcpy (&(processor->ip), processor->code + processor->ip, sizeof (processor->ip));
                 break;
             }
+
             CASE_JUMP (JA,  > );
             CASE_JUMP (JAE, >=);
             CASE_JUMP (JB,  < );
