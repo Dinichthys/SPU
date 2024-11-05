@@ -42,7 +42,7 @@ typedef size_t stack_t;
 #define STACK_DTOR_SHORT(stk)                                                                 \
     stack_dtor (stk)
 
-#define DUMP(stk)  dump ((stk), __FILE__, __LINE__)
+#define DUMP_STACK(stk)  dump ((stk), __FILE__, __LINE__)
 
 #define CASE_ERROR(num_error)   \
     case num_error:             \

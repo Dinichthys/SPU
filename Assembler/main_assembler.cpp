@@ -39,7 +39,7 @@ int main (const int argc, const char* argv[])
                              .input_buffer = NULL, .input_offset = 0,
                              .output = argv [2]};
 
-    // FIXME не передавать argv, че за нах
+    // NOTE не передавать argv, че за нах
     enum ASSEMBLER_ERROR result = asm_ctor (&assembler, argv [1]);
 
     ERROR_HANDLER (result);

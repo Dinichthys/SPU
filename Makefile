@@ -19,6 +19,8 @@ compiler: my_stdio.o main_assembler.o assembler.o logging.o print_error.o
 processor: stack main_spu.o spu.o logging.o print_error.o
 	@g++ $(CXXFLAGS) main_spu.o spu.o stack.o hash.o logging.o print_error.o -o processor
 
+disassembler: my_stdio.o main_disassembler.o disassembler.o logging.o print_error.o
+	@g++ $(CXXFLAGS) my_stdio.o main_disassembler.o disassembler.o logging.o print_error.o -o disassembler
 
 stack: stack.o hash.o
 	@
@@ -40,11 +42,20 @@ main_assembler.o: Assembler/main_assembler.cpp
 assembler.o: Assembler/assembler.cpp
 	@g++ $(CXXFLAGS) -c Assembler/assembler.cpp
 
+
 main_spu.o: SPU/main_spu.cpp
 	@g++ $(CXXFLAGS) -c SPU/main_spu.cpp
 
 spu.o: SPU/spu.cpp
 	@g++ $(CXXFLAGS) -c SPU/spu.cpp
+
+
+main_disassembler.o: Disassembler/main_disassembler.cpp
+	@g++ $(CXXFLAGS) -c Disassembler/main_disassembler.cpp
+
+disassembler.o: Disassembler/disassembler.cpp
+	@g++ $(CXXFLAGS) -c Disassembler/disassembler.cpp
+
 
 logging.o: Logger/logging.cpp
 	@g++ $(CXXFLAGS) -c Logger/logging.cpp

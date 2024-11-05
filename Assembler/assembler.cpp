@@ -178,7 +178,7 @@ enum ASSEMBLER_ERROR asm_ctor (assembler_t* const assembler, const char* name_in
         return CANT_CTOR_ASM;
     }
 
-    size_t size_code = size_of_file (input);
+    size_t size_code = 3 * size_of_file (input);
 
     assembler->code = (command_t*) calloc (size_code, sizeof (size_t));
     if (assembler->code == NULL)
@@ -232,6 +232,8 @@ enum ASSEMBLER_ERROR write_result (assembler_t* const assembler)
 
     fwrite (&(assembler->count_cmd), 1, sizeof (assembler->count_cmd), output_file);
     fwrite (assembler->code, sizeof (command_t), assembler->count_cmd, output_file);
+
+    FCLOSE (output_file);
 
     return DONE_ASM;
 }

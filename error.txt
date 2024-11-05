@@ -1,10 +1,150 @@
 [DEBUG] 
-SPU/spu.cpp:239 (spu_ctor) 42 sec 45 min 22 hours 5 days 11 month 2024 year
+Disassembler/disassembler.cpp:132 (disasm_ctor) 42 sec 43 min 2 hours 6 days 11 month 2024 year
 File with name "program_code.txt" and pointer [0x515000000300] was opened
 
 
 [DEBUG] 
-SPU/spu.cpp:256 (spu_ctor) 42 sec 45 min 22 hours 5 days 11 month 2024 year
+Disassembler/disassembler.cpp:150 (disasm_ctor) 42 sec 43 min 2 hours 6 days 11 month 2024 year
 File with pointer [0x515000000300] was closed
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №0
+cmd_and_arg = 1001
+
+[DEBUG] 
+Disassembler/disassembler.cpp:62 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+PUSH was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №9
+cmd_and_arg = 10010
+
+[DEBUG] 
+Disassembler/disassembler.cpp:76 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+POP was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №18
+cmd_and_arg = 1001
+
+[DEBUG] 
+Disassembler/disassembler.cpp:62 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+PUSH was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №27
+cmd_and_arg = 10110
+
+[DEBUG] 
+Disassembler/disassembler.cpp:76 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+POP was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №36
+cmd_and_arg = 1010
+
+[DEBUG] 
+Disassembler/disassembler.cpp:62 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+PUSH was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №45
+cmd_and_arg = 1001
+
+[DEBUG] 
+Disassembler/disassembler.cpp:62 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+PUSH was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №54
+cmd_and_arg = 11000
+
+[DEBUG] 
+Disassembler/disassembler.cpp:89 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+ADD was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №55
+cmd_and_arg = 10010
+
+[DEBUG] 
+Disassembler/disassembler.cpp:76 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+POP was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №64
+cmd_and_arg = 1001
+
+[DEBUG] 
+Disassembler/disassembler.cpp:62 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+PUSH was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №73
+cmd_and_arg = 1010
+
+[DEBUG] 
+Disassembler/disassembler.cpp:62 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+PUSH was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №82
+cmd_and_arg = 1110000
+
+[DEBUG] 
+Disassembler/disassembler.cpp:107 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+JB was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №91
+cmd_and_arg = 10100000
+
+[DEBUG] 
+Disassembler/disassembler.cpp:102 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+DRAW was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:53 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+Iteration №92
+cmd_and_arg = 0
+
+[DEBUG] 
+Disassembler/disassembler.cpp:112 (disassembling) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+HLT was recognised
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:183 (write_result) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+File with name "program_dis.asm" and pointer [0x515000000800] was opened
+
+
+[DEBUG] 
+Disassembler/disassembler.cpp:191 (write_result) 42 sec 43 min 2 hours 6 days 11 month 2024 year
+File with pointer [0x515000000800] was closed
 
 

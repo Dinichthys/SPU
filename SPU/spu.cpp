@@ -13,8 +13,8 @@
 #include "../My_stdio/my_stdio.h"
 
 static bool get_two_args (stack_elem* const first, stack_elem* const second, stack_t* const stk);
-static enum SPU_ERROR push_cmd (const command_t argument, spu_t* const processor);
-static enum SPU_ERROR pop_cmd (const command_t argument, spu_t* const processor);
+static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument);
+static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argumenT);
 static enum SPU_ERROR draw_cmd (spu_t* const processor);
 
 #define CASE_JUMP(jump_cmd, compare)                                                            \
@@ -42,7 +42,7 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor);
                                                                                                 \
         break;                                                                                  \
     }
-// ---
+// ----------------------------------------------------------------------------------------------
 
 enum SPU_ERROR processing (spu_t* const processor)
 {
@@ -59,7 +59,7 @@ enum SPU_ERROR processing (spu_t* const processor)
         {
             case PUSH:
             {
-                enum SPU_ERROR result = push_cmd (arg, processor);
+                enum SPU_ERROR result = push_cmd (processor, arg);
                 if (result != DONE_SPU)
                 {
                     return result;
@@ -68,7 +68,7 @@ enum SPU_ERROR processing (spu_t* const processor)
             }
             case POP:
             {
-                enum SPU_ERROR result = pop_cmd (arg, processor);
+                enum SPU_ERROR result = pop_cmd (processor, arg);
                 if (result != DONE_SPU)
                 {
                     return result;
@@ -249,6 +249,7 @@ enum SPU_ERROR spu_ctor (spu_t* const processor, const char* const name_file_inp
     processor->code = (command_t*) calloc (processor->count_cmd, sizeof (command_t));
     if (processor->code == NULL)
     {
+        FCLOSE (input);
         return CANT_CTOR_SPU;
     }
 
@@ -305,7 +306,7 @@ enum SPU_ERROR spu_dtor (spu_t* const processor)
     return DONE_SPU;
 }
 
-static enum SPU_ERROR push_cmd (const command_t argument, spu_t* const processor)
+static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument)
 {
     ASSERT (processor != NULL, "Invalid argument for push_cmd processor = %p\n", processor);
 
@@ -357,7 +358,7 @@ static enum SPU_ERROR push_cmd (const command_t argument, spu_t* const processor
     return DONE_SPU;
 }
 
-static enum SPU_ERROR pop_cmd (const command_t argument, spu_t* const processor)
+static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
 {
     ASSERT (processor != NULL, "Invalid argument for pop_cmd processor = %p\n", processor);
 
