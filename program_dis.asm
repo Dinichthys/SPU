@@ -1,13 +1,13 @@
-PUSH 0.00000
-POP bx
-PUSH 65.00000
-POP [bx]
-PUSH bx
-PUSH 1.00000
-ADD
-POP bx
-PUSH 10000.00000
-PUSH bx
-JB 18
-DRAW
-HLT
+push 0.00000
+pop bx
+push 65.00000
+pop [bx]
+push bx
+push 1.00000
+add
+pop bx
+push 10000.00000
+push bx
+jb 18
+draw
+hlt

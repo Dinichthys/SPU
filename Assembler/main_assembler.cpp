@@ -28,8 +28,11 @@ int main (const int argc, const char* argv[])
 
     if (argc != 3)
     {
-        fprintf (stderr, "Incorrect number of files for programming\n");
+        fprintf (stderr, "Incorrect number of files for compiling\n"
+                         "You need to write the name of input file firstly.\n"
+                         "Secondly you must write the name of output file.\n");
 
+        fclose (error_file);
         return EXIT_FAILURE;
     }
 

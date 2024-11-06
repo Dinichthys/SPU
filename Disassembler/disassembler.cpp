@@ -2,23 +2,24 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <ctype.h>
 #include <string.h>
-#include <math.h>
 
 #include "../program.h"
 #include "../Assert/my_assert.h"
 #include "../Logger/logging.h"
 #include "../My_stdio/my_stdio.h"
 
+static enum DISASSEMBLER_ERROR tolower_write   (disassembler_t* const disassembler, const char* const string);
 static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembler, const command_t argument);
 
 #define CASE_CMD(command)                                                                   \
     case command:                                                                           \
     {                                                                                       \
         LOG (DEBUG, #command " was recognised\n");                                          \
-        sprintf (disassembler->output_buffer + disassembler->output_offset, #command "\n"); \
-        disassembler->output_offset += strlen (#command) + 1;                               \
+        tolower_write (disassembler, #command);                                             \
+        sprintf (disassembler->output_buffer + disassembler->output_offset, "\n");          \
+        disassembler->output_offset += 1;                                                   \
         break;                                                                              \
     }
 
@@ -29,10 +30,11 @@ static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembl
         size_t pointer = 0;                                                                                 \
         memcpy (&pointer, disassembler->code + disassembler->ip, sizeof (pointer));                         \
                                                                                                             \
-        sprintf (disassembler->output_buffer + disassembler->output_offset, #jump_cmd " %lu\n", pointer);   \
+        tolower_write (disassembler, #jump_cmd);                                                            \
+        sprintf (disassembler->output_buffer + disassembler->output_offset, " %lu\n", pointer);             \
         char number_str [NUMBER_LEN] = "";                                                                  \
         sprintf (number_str, "%lu", pointer);                                                               \
-        disassembler->output_offset += strlen (#jump_cmd) + strlen (number_str) + 2;                        \
+        disassembler->output_offset += strlen (number_str) + 2;                                             \
         disassembler->ip += sizeof (pointer);                                                               \
                                                                                                             \
         break;                                                                                              \
@@ -51,7 +53,7 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
         command_t arg = (cmd_and_arg & ALL_ARGS);
 
         LOG (DEBUG, "Iteration №%lu\n"
-                    "cmd_and_arg = %b", disassembler->ip, cmd_and_arg);
+                    "cmd_and_arg = %8.8b", disassembler->ip, cmd_and_arg);
 
         (disassembler->ip)++;
 
@@ -61,7 +63,7 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
             {
                 LOG (DEBUG, "PUSH was recognised\n");
 
-                sprintf (disassembler->output_buffer + disassembler->output_offset, "PUSH ");
+                sprintf (disassembler->output_buffer + disassembler->output_offset, "push ");
                 disassembler->output_offset += 5;
 
                 enum DISASSEMBLER_ERROR result = push_or_pop_cmd (disassembler, arg);
@@ -75,7 +77,7 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
             {
                 LOG (DEBUG, "POP was recognised\n");
 
-                sprintf (disassembler->output_buffer + disassembler->output_offset, "POP ");
+                sprintf (disassembler->output_buffer + disassembler->output_offset, "pop ");
                 disassembler->output_offset += 4;
 
                 enum DISASSEMBLER_ERROR result = push_or_pop_cmd (disassembler, arg);
@@ -122,6 +124,7 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
 }
 
 #undef CASE_JUMP
+#undef CASE_CMD
 
 enum DISASSEMBLER_ERROR disasm_ctor (disassembler_t* const disassembler, const char* const name_file_input)
 {
@@ -189,6 +192,21 @@ enum DISASSEMBLER_ERROR write_result (disassembler_t* const disassembler, const 
     fwrite (disassembler->output_buffer, sizeof (char), disassembler->output_offset, output_file);
 
     FCLOSE (output_file);
+
+    return DONE_DISASM;
+}
+
+static enum DISASSEMBLER_ERROR tolower_write (disassembler_t* const disassembler, const char* const string)
+{
+    ASSERT (disassembler != NULL, "Invalid argument for tolower_write: disassembler = %p\n", disassembler);
+    ASSERT (string       != NULL, "Invalid argument for tolower_write: string = %p\n", string);
+
+    for (size_t i = 0; i < strlen (string); i++)
+    {
+        disassembler->output_buffer [disassembler->output_offset + i] = tolower (string [i]);
+    }
+
+    disassembler->output_offset += strlen (string);
 
     return DONE_DISASM;
 }

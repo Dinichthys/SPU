@@ -27,6 +27,15 @@ int main (const int argc, const char* argv[])
     set_log_file (error_file);
     set_log_lvl (DEBUG);
 
+    if (argc != 3)
+    {
+        fprintf (stderr, "Incorrect number of files for disassembling.\n"
+                         "You need to write the name of input file firstly.\n"
+                         "Secondly you must write the name of output file.\n");
+
+        return EXIT_FAILURE;
+    }
+
     disassembler_t disassembler = {0};
 
     enum DISASSEMBLER_ERROR result = disasm_ctor (&disassembler, argv [1]);
