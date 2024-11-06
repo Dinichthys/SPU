@@ -1,16 +1,16 @@
 /.vscode
 
-main.cpp
-
-*.o
-
-*.txt
-
-program.asm
+/build
 
 stack
 
 processor
 
 compiler
+
+disassembler
+
+program.asm
+
+program_dis.asm
 

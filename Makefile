@@ -14,63 +14,66 @@ release_stack: CXXFLAGS= -D NDEBUG -lm
 release_stack: stack
 
 compiler: my_stdio.o main_assembler.o assembler.o logging.o print_error.o
-	@g++ $(CXXFLAGS) main_assembler.o assembler.o my_stdio.o logging.o print_error.o -o compiler
+	@g++ $(CXXFLAGS) build/main_assembler.o build/assembler.o build/my_stdio.o build/logging.o build/print_error.o -o compiler
 
 processor: stack main_spu.o spu.o logging.o print_error.o
-	@g++ $(CXXFLAGS) main_spu.o spu.o stack.o hash.o logging.o print_error.o -o processor
+	@g++ $(CXXFLAGS) build/main_spu.o build/spu.o build/stack.o build/hash.o build/logging.o build/print_error.o -o processor
 
 disassembler: my_stdio.o main_disassembler.o disassembler.o logging.o print_error.o
-	@g++ $(CXXFLAGS) my_stdio.o main_disassembler.o disassembler.o logging.o print_error.o -o disassembler
+	@g++ $(CXXFLAGS) build/my_stdio.o build/main_disassembler.o build/disassembler.o build/logging.o build/print_error.o -o disassembler
 
 stack: stack.o hash.o
 	@
 
 stack.o: Stack/stack.cpp
-	@g++ $(CXXFLAGS) -c Stack/stack.cpp
+	@g++ $(CXXFLAGS) -c Stack/stack.cpp -o build/stack.o
 
 hash.o: Stack/hash.cpp
-	@g++ $(CXXFLAGS) -c Stack/hash.cpp
+	@g++ $(CXXFLAGS) -c Stack/hash.cpp -o build/hash.o
 
 
 my_stdio.o: My_stdio/my_stdio.cpp
-	@g++ $(CXXFLAGS) -c My_stdio/my_stdio.cpp
+	@g++ $(CXXFLAGS) -c My_stdio/my_stdio.cpp -o build/my_stdio.o
 
 
 main_assembler.o: Assembler/main_assembler.cpp
-	@g++ $(CXXFLAGS) -c Assembler/main_assembler.cpp
+	@g++ $(CXXFLAGS) -c Assembler/main_assembler.cpp -o build/main_assembler.o
 
 assembler.o: Assembler/assembler.cpp
-	@g++ $(CXXFLAGS) -c Assembler/assembler.cpp
+	@g++ $(CXXFLAGS) -c Assembler/assembler.cpp -o build/assembler.o
 
 
 main_spu.o: SPU/main_spu.cpp
-	@g++ $(CXXFLAGS) -c SPU/main_spu.cpp
+	@g++ $(CXXFLAGS) -c SPU/main_spu.cpp -o build/main_spu.o
 
 spu.o: SPU/spu.cpp
-	@g++ $(CXXFLAGS) -c SPU/spu.cpp
+	@g++ $(CXXFLAGS) -c SPU/spu.cpp -o build/spu.o
 
 
 main_disassembler.o: Disassembler/main_disassembler.cpp
-	@g++ $(CXXFLAGS) -c Disassembler/main_disassembler.cpp
+	@g++ $(CXXFLAGS) -c Disassembler/main_disassembler.cpp -o build/main_disassembler.o
 
 disassembler.o: Disassembler/disassembler.cpp
-	@g++ $(CXXFLAGS) -c Disassembler/disassembler.cpp
+	@g++ $(CXXFLAGS) -c Disassembler/disassembler.cpp -o build/disassembler.o
 
 
 logging.o: Logger/logging.cpp
-	@g++ $(CXXFLAGS) -c Logger/logging.cpp
+	@g++ $(CXXFLAGS) -c Logger/logging.cpp -o build/logging.o
 
 print_error.o: Assert/print_error.cpp
-	@g++ $(CXXFLAGS) -c Assert/print_error.cpp
+	@g++ $(CXXFLAGS) -c Assert/print_error.cpp -o build/print_error.o
 
 clean:
-	rm -rf *.o
+	rm -rf build/*
 
 clean_compiler:
-	rm assembler.o compiler
+	rm build/main_assembler.o build/assembler.o build/compiler
 
 clean_processor:
-	rm spu.o processor
+	rm build/main_spu.o build/spu.o build/processor
+
+clean_disassembler:
+	rm build/main_disassembler.o build/disassembler.o build/disassembler
 
 clean_stack:
 	rm hash.o stack.o stack
