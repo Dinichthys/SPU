@@ -10,4 +10,7 @@ push 10000.00000
 push bx
 jb 18
 draw
+push 30.00000
+pop [0]
+push [1]
 hlt

@@ -250,12 +250,20 @@ static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembl
 
         memcpy (&temp, disassembler->code + disassembler->ip, sizeof (temp));
 
-        sprintf (disassembler->output_buffer + disassembler->output_offset, "%.5lf", temp);
-
         char number_str [NUMBER_LEN] = "";
-        sprintf (number_str, "%lf", temp);
 
-        disassembler->output_offset += strlen (number_str) - 1;
+        if (argument & RAM)
+        {
+            sprintf (disassembler->output_buffer + disassembler->output_offset, "%.0lf", temp);
+            sprintf (number_str, "%.0lf", temp);
+        }
+        else
+        {
+            sprintf (disassembler->output_buffer + disassembler->output_offset, "%.5lf", temp);
+            sprintf (number_str, "%.5lf", temp);
+        }
+
+        disassembler->output_offset += strlen (number_str);
         disassembler->ip += sizeof (temp);
     }
 

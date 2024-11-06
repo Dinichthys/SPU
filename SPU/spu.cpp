@@ -163,7 +163,7 @@ enum SPU_ERROR processing (spu_t* const processor)
             }
             case DUMP:
             {
-                if (DUMP (processor->stk) == CANT_DUMP)
+                if (DUMP_STACK (processor->stk) == CANT_DUMP)
                 {
                     return CANT_DUMP_SPU;
                 }
