@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
 
 #include "../program.h"
 #include "../Stack/stack.h"
@@ -144,8 +147,8 @@ enum SPU_ERROR processing (spu_t* const processor)
             case IN:
             {
                 stack_elem number = 0;
-                fscanf (stdin, "%lf", &number);
-                if (stack_push (processor->stk, number) == CANT_PUSH)
+                int return_value = fscanf (stdin, "%lf", &number);
+                if ((return_value == 0) ||(stack_push (processor->stk, number) == CANT_PUSH))
                 {
                     return CANT_PUSH_IN_IN_SPU;
                 }
@@ -415,15 +418,78 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor)
 
     sleep (SLEEP_IN_RAM);
 
-    fputc ('\n', stdout);
+//-------------------------SFML-------------------------------------------------------------------------------
+    sf::RenderWindow window (sf::VideoMode ((SIZE_PIXEL + LEN_BORDER) * SIZE_COLUMNS + LEN_BORDER,
+                                            (SIZE_PIXEL + LEN_BORDER) * SIZE_STRINGS + LEN_BORDER),
+                                            "Draw");
 
-    for (size_t string_counter = 0; string_counter < SIZE_STRINGS; string_counter++)
+    window.setFramerateLimit (60);
+
+    bool done = false;
+
+    while (window.isOpen ())
     {
-        for (size_t column_counter = 0; column_counter < SIZE_COLUMNS; column_counter++)
+        sf::Event event;
+        while (window.pollEvent(event))
         {
-            fputc ((char) processor->ram [string_counter * SIZE_COLUMNS + column_counter], stdout);
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+            }
         }
+
+        if (!done)
+        {
+            for (size_t string_counter = 0; string_counter < SIZE_STRINGS; string_counter++)
+            {
+                for (size_t column_counter = 0; column_counter < SIZE_COLUMNS; column_counter++)
+                {
+                    sf::RectangleShape rectangle (sf::Vector2f ((float) SIZE_PIXEL, (float) SIZE_PIXEL));
+
+                    rectangle.setPosition ((float) (column_counter * (SIZE_PIXEL + LEN_BORDER) + LEN_BORDER),
+                                           (float) (string_counter * (SIZE_PIXEL + LEN_BORDER) + LEN_BORDER));
+
+                    if (processor->ram [string_counter * SIZE_COLUMNS + column_counter] != 0)
+                    {
+                        rectangle.setFillColor (sf::Color ((unsigned char) processor->ram
+                                                           [string_counter * SIZE_COLUMNS + column_counter],
+                                                           (unsigned char) processor->ram
+                                                           [string_counter * SIZE_COLUMNS + column_counter],
+                                                           (unsigned char) processor->ram
+                                                           [string_counter * SIZE_COLUMNS + column_counter]));
+                    }
+                    else
+                    {
+                        rectangle.setFillColor (sf::Color::Red);
+                    }
+
+                    window.draw (rectangle);
+                }
+            }
+            window.display ();
+            done = true;
+        }
+    }
+
+    char control_symbol = '\0';
+
+    fprintf (stderr, "Put \'T\' to get interpretation in symbols of draw of RAM in terminal.\n"
+                     "Put any another symbol to continue without it\n");
+    fscanf (stdin, "%c", &control_symbol);
+//------------------------------------------------------------------------------------------------------------
+
+    if (control_symbol == 'T')
+    {
         fputc ('\n', stdout);
+
+        for (size_t string_counter = 0; string_counter < SIZE_STRINGS; string_counter++)
+        {
+            for (size_t column_counter = 0; column_counter < SIZE_COLUMNS; column_counter++)
+            {
+                fputc ((char) processor->ram [string_counter * SIZE_COLUMNS + column_counter], stdout);
+            }
+            fputc ('\n', stdout);
+        }
     }
 
     return DONE_SPU;

@@ -17,7 +17,7 @@ compiler: my_stdio.o main_assembler.o assembler.o logging.o print_error.o
 	@g++ $(CXXFLAGS) build/main_assembler.o build/assembler.o build/my_stdio.o build/logging.o build/print_error.o -o compiler
 
 processor: stack main_spu.o spu.o logging.o print_error.o
-	@g++ $(CXXFLAGS) build/main_spu.o build/spu.o build/stack.o build/hash.o build/logging.o build/print_error.o -o processor
+	@g++ $(CXXFLAGS) -lsfml-graphics -lsfml-window -lsfml-system build/main_spu.o build/spu.o build/stack.o build/hash.o build/logging.o build/print_error.o -o processor
 
 disassembler: my_stdio.o main_disassembler.o disassembler.o logging.o print_error.o
 	@g++ $(CXXFLAGS) build/my_stdio.o build/main_disassembler.o build/disassembler.o build/logging.o build/print_error.o -o disassembler

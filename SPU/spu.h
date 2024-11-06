@@ -7,10 +7,12 @@
 #include "../Stack/stack.h"
 #include "../program.h"
 
-static const int SLEEP_IN_RAM = 0;
-static const size_t RAM_SIZE = 10000;
-static const size_t SIZE_STRINGS = 100;
-static const size_t SIZE_COLUMNS = 100;
+static const int    SLEEP_IN_RAM = 0;
+static const size_t RAM_SIZE     = 10000;
+static const size_t LEN_BORDER   = 10;
+static const size_t SIZE_PIXEL   = 5;
+static const size_t SIZE_STRINGS = 20;
+static const size_t SIZE_COLUMNS = 20;
 
 enum SPU_ERROR
 {
