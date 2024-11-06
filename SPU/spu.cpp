@@ -451,12 +451,14 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor)
 
                     if (processor->ram [string_counter * SIZE_COLUMNS + column_counter] != 0)
                     {
-                        rectangle.setFillColor (sf::Color ((unsigned char) processor->ram
-                                                           [string_counter * SIZE_COLUMNS + column_counter],
-                                                           (unsigned char) processor->ram
-                                                           [string_counter * SIZE_COLUMNS + column_counter],
-                                                           (unsigned char) processor->ram
-                                                           [string_counter * SIZE_COLUMNS + column_counter]));
+                        size_t color_elem = (size_t) *(processor->ram
+                                                       + (string_counter * SIZE_COLUMNS + column_counter));
+
+                        rectangle.setFillColor (sf::Color (*((unsigned char*) &color_elem),
+
+                                                           *((unsigned char*) &color_elem),
+
+                                                           *((unsigned char*) &color_elem)));
                     }
                     else
                     {
@@ -486,7 +488,7 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor)
         {
             for (size_t column_counter = 0; column_counter < SIZE_COLUMNS; column_counter++)
             {
-                fputc ((char) processor->ram [string_counter * SIZE_COLUMNS + column_counter], stdout);
+                fputc ((unsigned char) processor->ram [string_counter * SIZE_COLUMNS + column_counter], stdout);
             }
             fputc ('\n', stdout);
         }

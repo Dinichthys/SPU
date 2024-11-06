@@ -7,6 +7,8 @@
 #include "../Stack/stack.h"
 #include "../program.h"
 
+typedef double spu_elem_t;
+
 static const int    SLEEP_IN_RAM = 0;
 static const size_t RAM_SIZE     = 10000;
 static const size_t LEN_BORDER   = 10;
@@ -60,7 +62,7 @@ typedef struct spu
 
     stack_t stack_func_call_ip;
 
-    double* ram;
+    spu_elem_t* ram;
 } spu_t;
 
 enum SPU_ERROR processing (spu_t* const processor);
