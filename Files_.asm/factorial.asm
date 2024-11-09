@@ -1,27 +1,41 @@
 in
 pop bx
 call factorial:
+
+push cx
+out
+
 hlt
 
 
 factorial:
 
+    push bx
     push 1
-    pop cx
 
-    for_factorial:
+    jb complete:
 
-        push cx
-        push cx
-        mul
-        out
-
-        push cx+1
+        push 1
         pop cx
+        ret
 
-        push cx
-        push bx
+    complete:
 
-    jae for_factorial:
+    push 1
+    push bx
+    sub
+
+    pop bx
+
+    call factorial:
+
+    push bx+1
+    pop bx
+
+    push cx
+    push bx
+    mul
+
+    pop cx
 
 ret

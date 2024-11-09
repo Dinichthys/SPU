@@ -9,7 +9,7 @@
 #include "../Assert/my_assert.h"
 
 int my_strcmp (const char* const s1, const char* const s2);
-size_t skip_space_symbols (char* const string, const size_t offset);
+size_t skip_space_symbols (char* const string);
 size_t size_of_file (FILE* const input);
 
 #define FOPEN(file, name, mode)                                                     \

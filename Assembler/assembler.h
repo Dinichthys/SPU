@@ -7,25 +7,25 @@
 #include "../program.h"
 
 static const char COMMENT_SYMBOL  = ';';
-static const int STR_ARGUMENT_LEN = 40;
+static const int STR_ARGUMENT_LEN = 100;
 static const int CMD_NAME_LEN     = 40;
 static const int REG_NAME_LEN     = 5;
 static const int LABEL_NAME_LEN   = 100;
 static const int NUMBER_LABELS    = 100;
 static const char* REGISTERS [COUNT_REGS] = {"ax", "bx", "cx", "dx", "ex", "fx", "gx", "hx", "ix", "jx"};
 
-// NOTE квадратка на асме + графика(без граф либы) + readme -> 7
-
 enum ASSEMBLER_ERROR
 {
     DONE_ASM              = 0,
     PUSH_NO_ARG           = 1,
     POP_INVAL_ARG         = 2,
+    PUSH_OR_POP_INVAL_ARG = 10,
     INVAL_REG             = 3,
     INVAL_COMMAND         = 4,
     CANT_CTOR_ASM         = 5,
     CANT_DTOR_ASM         = 6,
     CANT_WRITE_RESULT_ASM = 7,
+    REDECLARATION_LABEL   = 8,
 };
 
 typedef struct label

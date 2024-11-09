@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "assembler.h"
-#include "../Logger/logging.h"
+#include "../My_lib/Logger/logging.h"
 
 #define ERROR_HANDLER(error)                                                                            \
     if (error != DONE_ASM)                                                                              \
@@ -17,7 +17,7 @@
 
 int main (const int argc, const char* argv[])
 {
-    FILE* const error_file = fopen ("Logger/error.txt", "w");
+    FILE* const error_file = fopen ("My_lib/Logger/error.txt", "w");
     if (error_file == NULL)
     {
         fprintf (stderr, "Can't start logging\n");
@@ -62,7 +62,7 @@ int main (const int argc, const char* argv[])
 
     for (size_t i = 0; i < assembler.labels_size; i++)
     {
-        if ((size_t) -1 == (assembler.labels[i].pointer))
+        if ((assembler.labels[i].pointer) == (size_t) -1)
         {
             program_success = false;
             fprintf (stderr, "Undefined label %s\n", assembler.labels[i].name);

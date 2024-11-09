@@ -14,7 +14,7 @@ int my_strcmp (const char* const s1, const char* const s2)
     ASSERT (s2 != NULL, "Invalid pointer s2 for function %s\n", __FUNCTION__);
 
     LOG (DEBUG, "Function got arguments:\n"
-                "s1 = %p s2 = %p\n", s1, s2);
+                "s1 = %s\ns2 = %s\n", s1, s2);
 
     size_t i = 0;
     while ((tolower (s1 [i]) - tolower (s2 [i])) == 0)
@@ -29,11 +29,11 @@ int my_strcmp (const char* const s1, const char* const s2)
     return (tolower (s1 [i]) - tolower (s2 [i]));
 }
 
-size_t skip_space_symbols (char* const string, const size_t offset)
+size_t skip_space_symbols (char* const string)
 {
     ASSERT (string != NULL, "Invalid argument for [%s]: string = %p\n", __FUNCTION__, string);
 
-    size_t new_offset = offset;
+    size_t new_offset = 0;
     char check = '\0';
 
     while ((sscanf (string + new_offset, "%c", &check) != EOF) && (isspace (string [new_offset])))

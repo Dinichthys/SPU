@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../Logger/logging.h"
+#include "../My_lib/Logger/logging.h"
 
 #define ERROR_HANDLER(error)                                                                            \
     if (error != DONE_DISASM)                                                                           \
@@ -18,7 +18,7 @@
 
 int main (const int argc, const char* argv[])
 {
-    FILE* const error_file = fopen ("Logger/error.txt", "w");
+    FILE* const error_file = fopen ("My_lib/Logger/error.txt", "w");
     if (error_file == NULL)
     {
         fprintf (stderr, "Can't start logging\n");

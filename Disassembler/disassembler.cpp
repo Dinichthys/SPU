@@ -6,9 +6,10 @@
 #include <string.h>
 
 #include "../program.h"
-#include "../Assert/my_assert.h"
-#include "../Logger/logging.h"
-#include "../My_stdio/my_stdio.h"
+#include "../My_lib/Assert/my_assert.h"
+#include "../My_lib/Logger/logging.h"
+#include "../My_lib/My_stdio/my_stdio.h"
+#include "../My_lib/helpful.h"
 
 static enum DISASSEMBLER_ERROR tolower_write   (disassembler_t* const disassembler, const char* const string);
 static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembler, const command_t argument);
@@ -138,7 +139,11 @@ enum DISASSEMBLER_ERROR disasm_ctor (disassembler_t* const disassembler, const c
         return CANT_CTOR_DISASM;
     }
 
-    fread (&(disassembler->count_cmd), 1, sizeof (disassembler->count_cmd), input);
+    if (fread (&(disassembler->count_cmd), 1, sizeof (disassembler->count_cmd), input) == 0)
+    {
+        FCLOSE (input);
+        return CANT_CTOR_DISASM;
+    }
 
     disassembler->ip = 0;
 
@@ -149,7 +154,13 @@ enum DISASSEMBLER_ERROR disasm_ctor (disassembler_t* const disassembler, const c
         return CANT_CTOR_DISASM;
     }
 
-    fread (disassembler->code, sizeof (command_t), disassembler->count_cmd, input);
+    if (fread (disassembler->code, sizeof (command_t), disassembler->count_cmd, input) == 0)
+    {
+        FCLOSE (input);
+        FREE_AND_NULL (disassembler->code);
+        return CANT_CTOR_DISASM;
+    }
+
     FCLOSE (input);
 
     disassembler->output_buffer = (char*) calloc (disassembler->count_cmd * 10, sizeof (char));
@@ -203,7 +214,7 @@ static enum DISASSEMBLER_ERROR tolower_write (disassembler_t* const disassembler
 
     for (size_t i = 0; i < strlen (string); i++)
     {
-        disassembler->output_buffer [disassembler->output_offset + i] = tolower (string [i]);
+        disassembler->output_buffer [disassembler->output_offset + i] = (char) tolower (string [i]);
     }
 
     disassembler->output_offset += strlen (string);
@@ -232,7 +243,7 @@ static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembl
             return PUSH_INVAL_REG;
         }
 
-        sprintf (disassembler->output_buffer + disassembler->output_offset, "%cx", 'a' + number_reg);
+        sprintf (disassembler->output_buffer + disassembler->output_offset, "%cx", (char) ('a' + number_reg));
 
         disassembler->output_offset += 2;
         disassembler->ip += sizeof (number_reg);
@@ -246,25 +257,28 @@ static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembl
 
     if (argument & IMMED_NUM)
     {
-        double temp = 0;
+        double temp_double = 0;
+        size_t temp_size_t = 0;
 
-        memcpy (&temp, disassembler->code + disassembler->ip, sizeof (temp));
+        memcpy (&temp_double, disassembler->code + disassembler->ip, sizeof (temp_double));
+        memcpy (&temp_size_t, disassembler->code + disassembler->ip, sizeof (temp_size_t));
 
-        char number_str [NUMBER_LEN] = "";
+        char temp_str [NUMBER_LEN] = "";
 
         if (argument & RAM)
         {
-            sprintf (disassembler->output_buffer + disassembler->output_offset, "%.0lf", temp);
-            sprintf (number_str, "%.0lf", temp);
+            sprintf (disassembler->output_buffer + disassembler->output_offset, "%lu", temp_size_t);
+            sprintf (temp_str, "%lu", temp_size_t);
+            disassembler->ip += sizeof (temp_size_t);
         }
         else
         {
-            sprintf (disassembler->output_buffer + disassembler->output_offset, "%.5lf", temp);
-            sprintf (number_str, "%.5lf", temp);
+            sprintf (disassembler->output_buffer + disassembler->output_offset, "%.5lf", temp_double);
+            sprintf (temp_str, "%.5lf", temp_double);
+            disassembler->ip += sizeof (temp_double);
         }
 
-        disassembler->output_offset += strlen (number_str);
-        disassembler->ip += sizeof (temp);
+        disassembler->output_offset += strlen (temp_str);
     }
 
     if (argument & RAM)

@@ -5,33 +5,29 @@ pop cx
 
 for_1:
 
-    push cx  push 49  sub
+    push cx
+    push 10
+    sub
 
-    push cx  push 49  sub
-
-    mul
-
-    push bx
-
-    push 49  sub
-
-    push 2
+    push cx
+    push 10
+    sub
 
     mul
 
     push bx
+    push 10
+    sub
 
-    push 49  sub
-
-    push 2
-
-    mul
+    push bx
+    push 10
+    sub
 
     mul
 
     add
 
-    push 2500
+    push 49
 
     sub
 
@@ -39,13 +35,13 @@ for_1:
 
     push ex  push ex  mul
 
-    push 1500
+    push 100
 
     jb not_circle:
 
-        push 35
+        push 255
 
-        push bx  push 100  mul  push cx  add
+        push bx  push 20  mul  push cx  add
 
         pop dx
 
@@ -55,9 +51,9 @@ for_1:
 
     not_circle:
 
-        push 32
+        push 0
 
-        push bx  push 100  mul  push cx  add
+        push bx  push 20  mul  push cx  add
 
         pop dx
 
@@ -71,7 +67,7 @@ for_1:
 
     push cx
 
-    push 100
+    push 20
 
     ja for_1:
 
@@ -85,11 +81,15 @@ for_1:
 
         push bx
 
-        push 100
+        push 20
 
         ja for_1:
 
 draw
+
+push 49
+
+sqrt
 
 hlt
 
