@@ -81,3 +81,5 @@ int main (const int argc, const char* argv[])
 
     return (program_success) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
+
+#undef ERROR_HANDLER
