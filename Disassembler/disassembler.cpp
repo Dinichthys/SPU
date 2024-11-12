@@ -246,14 +246,7 @@ static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembl
             return PUSH_INVAL_REG;
         }
 
-        if (number_reg == 0)
-        {
-            sprintf (disassembler->output_buffer + disassembler->output_offset, "0x");
-        }
-        else
-        {
-            sprintf (disassembler->output_buffer + disassembler->output_offset, "%cx", (char) ('a' + number_reg));
-        }
+        sprintf (disassembler->output_buffer + disassembler->output_offset, "%s", REGISTERS [number_reg]);
 
         disassembler->output_offset += 2;
         disassembler->ip += sizeof (number_reg);
