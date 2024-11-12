@@ -71,7 +71,7 @@ print_error.o: My_lib/Assert/print_error.cpp
 	@$(CXX) $(CXXFLAGS) -c My_lib/Assert/print_error.cpp -o build/print_error.o
 
 clean: rmdir_build
-	rm stack disassembler compiler processor
+	rm disassembler compiler processor
 
 rmdir_build: clean_build
 	rmdir build
@@ -89,5 +89,5 @@ clean_disassembler:
 	rm build/main_disassembler.o build/disassembler.o disassembler
 
 clean_stack:
-	rm hash.o stack.o stack
+	rm hash.o stack.o
 

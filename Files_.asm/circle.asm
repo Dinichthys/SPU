@@ -33,7 +33,9 @@ for_1:
 
     pop ex
 
-    push ex  push ex  mul
+    push ex
+    push ex
+    mul
 
     push 100
 
@@ -41,7 +43,13 @@ for_1:
 
         push 65
 
-        push bx  push 20  mul  push cx  add
+        push bx
+        push 20
+        mul
+
+        push cx
+
+        add
 
         pop dx
 
@@ -53,7 +61,13 @@ for_1:
 
         push 0
 
-        push bx  push 20  mul  push cx  add
+        push bx
+        push 20
+        mul
+
+        push cx
+
+        add
 
         pop dx
 
@@ -61,7 +75,9 @@ for_1:
 
     end_push_symbol:
 
-    push cx  push 1  add
+    push cx
+    push 1
+    add
 
     pop cx
 
@@ -71,7 +87,9 @@ for_1:
 
     ja for_1:
 
-        push bx  push 1  add
+        push bx
+        push 1
+        add
 
         pop bx
 

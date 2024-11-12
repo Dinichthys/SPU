@@ -121,7 +121,7 @@ linear:
 
         else_linear_dx_0:
 
-            push 426.426
+            push 0.5
             out
 
         end_else_linear_dx_0:
