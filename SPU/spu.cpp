@@ -683,7 +683,7 @@ static enum SPU_ERROR dump_spu (const spu_t* const processor)
 
     for (int index = 0; index < COUNT_REGS; index++)
     {
-        fprintf (stderr, "%cx = %lf\n---------------\n", 'a' + index, processor->regs [index]);
+        fprintf (stderr, "%s = %lf\n---------------\n", REGISTERS [index], processor->regs [index]);
     }
 
 

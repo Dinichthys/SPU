@@ -5,7 +5,7 @@ typedef unsigned char command_t;
 
 static const int ARGUMENT_TYPE = 3;
 static const int COUNT_REGS    = 10;
-__attribute__((unused)) static const char* REGISTERS [COUNT_REGS] = {"ax", "bx", "cx", "dx", "ex",
+__attribute__((unused)) static const char* REGISTERS [COUNT_REGS] = {"0x", "bx", "cx", "dx", "ex",
                                                                      "fx", "gx", "hx", "ix", "jx"};
 
 enum COMMANDS

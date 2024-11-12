@@ -272,6 +272,13 @@ static enum ASSEMBLER_ERROR push_or_pop_cmd (assembler_t* const assembler, const
     {
         argument |= RAM;
 
+        if (strchr (str_argument, ']') == NULL)
+        {
+            return PUSH_OR_POP_INVAL_ARG;
+        }
+
+        *strchr (str_argument, ']') = '\0';
+
         arg_offset++;
 
     }
@@ -372,16 +379,6 @@ static enum ASSEMBLER_ERROR push_or_pop_cmd (assembler_t* const assembler, const
         argument |= REGISTER;
 
         memcpy (assembler->code + assembler->count_cmd - 1, &argument, sizeof (argument));
-
-        if (argument & RAM)
-        {
-            if (strchr (reg, ']') == NULL)
-            {
-                return PUSH_OR_POP_INVAL_ARG;
-            }
-
-            *strchr (reg, ']') = '\0';
-        }
 
         number_reg = (size_t) register_num (reg);
         if (number_reg == (size_t) -1)
