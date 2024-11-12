@@ -12,8 +12,6 @@ static const int CMD_NAME_LEN     = 40;
 static const int REG_NAME_LEN     = 5;
 static const int LABEL_NAME_LEN   = 100;
 static const int NUMBER_LABELS    = 100;
-__attribute__((unused)) static const char* REGISTERS [COUNT_REGS] = {"ax", "bx", "cx", "dx", "ex",
-                                                              "fx", "gx", "hx", "ix", "jx"};
 
 enum ASSEMBLER_ERROR
 {

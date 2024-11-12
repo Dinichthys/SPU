@@ -19,8 +19,9 @@
 static bool get_two_args (stack_elem* const first, stack_elem* const second, stack_t* const stk);
 static enum SPU_ERROR push_cmd  (spu_t* const processor, const command_t argument);
 static enum SPU_ERROR pop_cmd   (spu_t* const processor, const command_t argument);
-static enum SPU_ERROR draw_cmd  (spu_t* const processor);
-static enum SPU_ERROR draw_sfml (spu_t* const processor);
+static enum SPU_ERROR draw_cmd  (const spu_t* const processor);
+static enum SPU_ERROR draw_sfml (const spu_t* const processor);
+static enum SPU_ERROR dump_spu  (const spu_t* const processor);
 static enum SPU_ERROR meow_cmd  (spu_t* const processor);
 
 #define LOG_CMD_DEFINED(cmd)                                                                    \
@@ -242,9 +243,10 @@ enum SPU_ERROR processing (spu_t* const processor)
             case DUMP:
             {
                 LOG_CMD_DEFINED (DUMP);
-                if (DUMP_STACK (processor->stk) == CANT_DUMP)
+                enum SPU_ERROR result = dump_spu (processor);
+                if (result != DONE_SPU)
                 {
-                    return CANT_DUMP_SPU;
+                    return result;
                 }
                 break;
             }
@@ -485,6 +487,11 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
             return POP_INVAL_REG;
         }
 
+        if ((number_reg == 0) && (argument == REGISTER))
+        {
+            return DONE_SPU;
+        }
+
         ptr_number = processor->regs + number_reg;
     }
 
@@ -518,7 +525,29 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
     return DONE_SPU;
 }
 
-static enum SPU_ERROR draw_cmd (spu_t* const processor)
+static enum SPU_ERROR meow_cmd (spu_t* const processor)
+{
+    ASSERT (processor != NULL, "Invalid argument processor = %p\n", processor);
+
+    stack_elem number = 0;
+
+    if (stack_pop (processor->stk, &number) != DONE)
+    {
+        return CANT_POP_IN_MEOW_SPU;
+    }
+
+    stack_elem counter = 0;
+
+    while (counter < number)
+    {
+        fprintf (stdout, "meow ");
+        counter++;
+    }
+
+    return DONE_SPU;
+}
+
+static enum SPU_ERROR draw_cmd (const spu_t* const processor)
 {
     ASSERT (processor != NULL, "Invalid argument for draw_cmd processor = %p\n", processor);
 
@@ -563,7 +592,7 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor)
     return DONE_SPU;
 }
 
-static enum SPU_ERROR draw_sfml (spu_t* const processor)
+static enum SPU_ERROR draw_sfml (const spu_t* const processor)
 {
     ASSERT (processor != NULL, "Invalid argument processor = %p\n", processor);
 
@@ -622,24 +651,43 @@ static enum SPU_ERROR draw_sfml (spu_t* const processor)
     return DONE_SPU;
 }
 
-static enum SPU_ERROR meow_cmd (spu_t* const processor)
+static enum SPU_ERROR dump_spu (const spu_t* const processor)
 {
     ASSERT (processor != NULL, "Invalid argument processor = %p\n", processor);
 
-    stack_elem number = 0;
+    fprintf (stderr, "---------------------SPU DUMP---------------------\n"
+                     "Stack of elements in spu:\n");
 
-    if (stack_pop (processor->stk, &number) != DONE)
+    if (DUMP_STACK (processor->stk) == CANT_DUMP)
     {
-        return CANT_POP_IN_MEOW_SPU;
+        return CANT_DUMP_SPU;
     }
 
-    stack_elem counter = 0;
+    fprintf (stderr, "--------------------------------------------------\n"
+                     "Stack of ip of Call functions:\n");
 
-    while (counter < number)
+    if (DUMP_STACK (processor->stack_func_call_ip) == CANT_DUMP)
     {
-        fprintf (stdout, "meow ");
-        counter++;
+        return CANT_DUMP_SPU;
     }
+
+    fprintf (stderr, "--------------------------------------------------\n");
+
+    fprintf (stderr, "Count commands            = %lu\n"
+                     "Instruction pointer (ip)  = %lu\n"
+                     "Pointer on RAM            = %p\n"
+                     "Pointer on code           = %p\n",
+                     processor->count_cmd, processor->ip, processor->ram, processor->code);
+
+    fprintf (stderr, "Registers' values:\n---------------\n");
+
+    for (int index = 0; index < COUNT_REGS; index++)
+    {
+        fprintf (stderr, "%cx = %lf\n---------------\n", 'a' + index, processor->regs [index]);
+    }
+
+
+    fprintf (stderr, "--------------------------------------------------\n");
 
     return DONE_SPU;
 }
