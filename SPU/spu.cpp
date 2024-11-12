@@ -632,9 +632,7 @@ static enum SPU_ERROR draw_sfml (const spu_t* const processor)
                                                        + (string_counter * SIZE_COLUMNS + column_counter));
 
                         rectangle.setFillColor (sf::Color (*((unsigned char*) &color_elem),
-
                                                            *((unsigned char*) &color_elem),
-
                                                            *((unsigned char*) &color_elem)));
                     }
                     else
