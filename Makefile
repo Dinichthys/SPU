@@ -40,8 +40,10 @@ processor: build stack main_spu.o spu.o logging.o print_error.o
 disassembler: build my_stdio.o main_disassembler.o disassembler.o logging.o print_error.o
 	@$(CXX) $(CXXFLAGS) build/my_stdio.o build/main_disassembler.o build/disassembler.o build/logging.o build/print_error.o -o disassembler
 
+
 build:
 	mkdir build
+
 
 stack: stack.o hash.o
 	@
@@ -84,6 +86,7 @@ logging.o: My_lib/Logger/logging.cpp
 print_error.o: My_lib/Assert/print_error.cpp
 	@$(CXX) $(CXXFLAGS) -c My_lib/Assert/print_error.cpp -o build/print_error.o
 
+
 clean: rmdir_build
 	rm disassembler compiler processor
 
@@ -104,4 +107,21 @@ clean_disassembler:
 
 clean_stack:
 	rm hash.o stack.o
+
+
+circle: compiler processor
+	./compiler Files_.asm/circle.asm program_code.txt
+
+fibonaci: compiler processor
+	./compiler Files_.asm/fibonaci.asm program_code.txt
+
+factorial: compiler processor
+	./compiler Files_.asm/factorial.asm program_code.txt
+
+square_solver: compiler processor
+	./compiler Files_.asm/square_solver.asm program_code.txt
+
+
+run:
+	./processor program_code.txt
 
