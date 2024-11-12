@@ -17,10 +17,11 @@
 #include "../My_lib/helpful.h"
 
 static bool get_two_args (stack_elem* const first, stack_elem* const second, stack_t* const stk);
-static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument);
-static enum SPU_ERROR pop_cmd  (spu_t* const processor, const command_t argument);
-static enum SPU_ERROR draw_cmd (spu_t* const processor);
-static enum SPU_ERROR meow_cmd (spu_t* const processor);
+static enum SPU_ERROR push_cmd  (spu_t* const processor, const command_t argument);
+static enum SPU_ERROR pop_cmd   (spu_t* const processor, const command_t argument);
+static enum SPU_ERROR draw_cmd  (spu_t* const processor);
+static enum SPU_ERROR draw_sfml (spu_t* const processor);
+static enum SPU_ERROR meow_cmd  (spu_t* const processor);
 
 #define LOG_CMD_DEFINED(cmd)                                                                    \
     LOG (DEBUG, "Command " #cmd " was defined\n");
@@ -523,12 +524,52 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor)
 
     sleep (SLEEP_IN_RAM);
 
-//-------------------------SFML-------------------------------------------------------------------------------
+    draw_sfml (processor);
+
+    char control_symbol = '\0';
+
+    fprintf (stderr, "Put \'T\' to get interpretation in symbols of draw of RAM in terminal.\n"
+                     "Put any another symbol to continue without it\n");
+    if (fscanf (stdin, "%c", &control_symbol) != 1)
+    {
+        return DONE_SPU;
+    }
+
+    if (control_symbol == 'T')
+    {
+        fputc ('\n', stdout);
+
+        for (size_t string_counter = 0; string_counter < SIZE_STRINGS; string_counter++)
+        {
+            for (size_t column_counter = 0; column_counter < SIZE_COLUMNS; column_counter++)
+            {
+                if ((*((unsigned char*) (processor->ram + string_counter * SIZE_COLUMNS + column_counter)
+                                         + BIG_ENDIAN_SHIFT_ELEMENT) == '\0')
+                    || (isspace (*((char*) (processor->ram + string_counter * SIZE_COLUMNS + column_counter)
+                                            + BIG_ENDIAN_SHIFT_ELEMENT))))
+                {
+                    fputc (' ', stdout);
+                }
+                else
+                {
+                    fputc (*((unsigned char*) (processor->ram + string_counter * SIZE_COLUMNS + column_counter)
+                                               + BIG_ENDIAN_SHIFT_ELEMENT), stdout);
+                }
+            }
+            fputc ('\n', stdout);
+        }
+    }
+
+    return DONE_SPU;
+}
+
+static enum SPU_ERROR draw_sfml (spu_t* const processor)
+{
+    ASSERT (processor != NULL, "Invalid argument processor = %p\n", processor);
+
     sf::RenderWindow window (sf::VideoMode ((SIZE_PIXEL + LEN_BORDER) * SIZE_COLUMNS + LEN_BORDER,
                                             (SIZE_PIXEL + LEN_BORDER) * SIZE_STRINGS + LEN_BORDER),
                                             "Draw");
-
-    window.setFramerateLimit (60);
 
     bool done = false;
 
@@ -578,40 +619,9 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor)
         }
     }
 
-    char control_symbol = '\0';
-
-    fprintf (stderr, "Put \'T\' to get interpretation in symbols of draw of RAM in terminal.\n"
-                     "Put any another symbol to continue without it\n");
-    if (fscanf (stdin, "%c", &control_symbol) != 1)
-    {
-        return DONE_SPU;
-    }
-//------------------------------------------------------------------------------------------------------------
-
-    if (control_symbol == 'T')
-    {
-        fputc ('\n', stdout);
-
-        for (size_t string_counter = 0; string_counter < SIZE_STRINGS; string_counter++)
-        {
-            for (size_t column_counter = 0; column_counter < SIZE_COLUMNS; column_counter++)
-            {
-                if (((unsigned char) processor->ram [string_counter * SIZE_COLUMNS + column_counter] == '\0')
-                    || (isspace ((char) processor->ram [string_counter * SIZE_COLUMNS + column_counter])))
-                {
-                    fputc (' ', stdout);
-                }
-                else
-                {
-                    fputc ((unsigned char) processor->ram [string_counter * SIZE_COLUMNS + column_counter], stdout);
-                }
-            }
-            fputc ('\n', stdout);
-        }
-    }
-
     return DONE_SPU;
 }
+
 static enum SPU_ERROR meow_cmd (spu_t* const processor)
 {
     ASSERT (processor != NULL, "Invalid argument processor = %p\n", processor);
