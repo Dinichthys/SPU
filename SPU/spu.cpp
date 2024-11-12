@@ -544,6 +544,8 @@ static enum SPU_ERROR meow_cmd (spu_t* const processor)
         counter++;
     }
 
+    fputc ('\n', stdout);
+
     return DONE_SPU;
 }
 
