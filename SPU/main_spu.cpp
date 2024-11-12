@@ -18,6 +18,14 @@
 
 int main (const int argc, const char* argv[])
 {
+    if (argc != 2)
+    {
+        fprintf (stderr, "Incorrect number of files for processing.\n"
+                         "You need to write the name of input file.\n");
+
+        return EXIT_FAILURE;
+    }
+
     FILE* const error_file = fopen ("My_lib/Logger/error.txt", "w");
     if (error_file == NULL)
     {
@@ -27,17 +35,7 @@ int main (const int argc, const char* argv[])
     set_log_file (error_file);
     set_log_lvl (DEBUG);
 
-    if (argc != 2)
-    {
-        fprintf (stderr, "Incorrect number of files for processing.\n"
-                         "You need to write the name of input file.\n");
-
-        fclose (error_file);
-        return EXIT_FAILURE;
-    }
-
-    spu_t processor = {.count_cmd = 0, .ip = 0, .code = NULL, .regs = {0},
-                       .stk = 0, .stack_func_call_ip = 0, .ram = NULL};
+    spu_t processor = {0};
 
     enum SPU_ERROR result = spu_ctor (&processor, argv [1]);
 

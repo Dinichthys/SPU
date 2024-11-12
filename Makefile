@@ -64,16 +64,16 @@ print_error.o: My_lib/Assert/print_error.cpp
 	@g++ $(CXXFLAGS) -c My_lib/Assert/print_error.cpp -o build/print_error.o
 
 clean:
-	rm -rf build/*
+	rm -rf build/* stack disassembler compiler processor
 
 clean_compiler:
-	rm build/main_assembler.o build/assembler.o build/compiler
+	rm build/main_assembler.o build/assembler.o compiler
 
 clean_processor:
-	rm build/main_spu.o build/spu.o build/processor
+	rm build/main_spu.o build/spu.o processor
 
 clean_disassembler:
-	rm build/main_disassembler.o build/disassembler.o build/disassembler
+	rm build/main_disassembler.o build/disassembler.o disassembler
 
 clean_stack:
 	rm hash.o stack.o stack

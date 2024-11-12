@@ -572,7 +572,7 @@ enum STACK_ERROR dump (const size_t stack_encode, const char* const file, const 
 
     #endif // HASH_PROT
 
-    fprintf (stderr, "%8.8b\n", 0); //ANCHOR
+    fprintf (stderr, "%8.8b\n", (unsigned int) 0); //ANCHOR
 
     if (stk->name == NULL)
     {
@@ -632,7 +632,7 @@ enum STACK_ERROR dump (const size_t stack_encode, const char* const file, const 
         size_t j = 0;
         while (j < sizeof (stack_elem))
         {
-            char* symbol = ((char*) (stk->data) + i * sizeof (stack_elem) + j);
+            unsigned char* symbol = ((unsigned char*) (stk->data) + i * sizeof (stack_elem) + j);
             fprintf (stderr, "%8.8b ", *symbol);
             j++;
         }

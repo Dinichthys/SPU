@@ -94,6 +94,8 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
             CASE_CMD (MUL);
             CASE_CMD (DIV);
             CASE_CMD (SQRT);
+            CASE_CMD (SIN);
+            CASE_CMD (COS);
             CASE_CMD (IN);
             CASE_CMD (OUT);
             CASE_CMD (DUMP);
@@ -103,6 +105,7 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
             CASE_CMD (RET);
 
             CASE_CMD (DRAW);
+            CASE_CMD (MEOW);
 
             CASE_JUMP (JMP);
             CASE_JUMP (JA);

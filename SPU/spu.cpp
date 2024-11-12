@@ -20,9 +20,38 @@ static bool get_two_args (stack_elem* const first, stack_elem* const second, sta
 static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument);
 static enum SPU_ERROR pop_cmd  (spu_t* const processor, const command_t argument);
 static enum SPU_ERROR draw_cmd (spu_t* const processor);
+static enum SPU_ERROR meow_cmd (spu_t* const processor);
 
 #define LOG_CMD_DEFINED(cmd)                                                                    \
     LOG (DEBUG, "Command " #cmd " was defined\n");
+
+#define CASE_JUMP_EQUAL(jump_cmd, compare)                                                      \
+    case jump_cmd:                                                                              \
+    {                                                                                           \
+        LOG_CMD_DEFINED (jump_cmd);                                                             \
+        stack_elem first  = 0;                                                                  \
+        stack_elem second = 0;                                                                  \
+        if (!(get_two_args (&first, &second, &(processor->stk))))                               \
+        {                                                                                       \
+            fprintf (stderr, "There is no element in stack to do the command " #jump_cmd "\n"); \
+            return CANT_ ## jump_cmd ## _SPU;                                                   \
+        }                                                                                       \
+                                                                                                \
+        size_t pointer = 0;                                                                     \
+        memcpy (&pointer, processor->code + processor->ip, sizeof (pointer));                   \
+                                                                                                \
+        if (memcmp (&first, &second, sizeof (second)) compare 0)                                \
+        {                                                                                       \
+            processor->ip = pointer;                                                            \
+        }                                                                                       \
+        else                                                                                    \
+        {                                                                                       \
+            processor->ip += sizeof (pointer);                                                  \
+        }                                                                                       \
+                                                                                                \
+        break;                                                                                  \
+    }
+//-----------------------------------------------------------------------------------------------
 
 #define CASE_JUMP(jump_cmd, compare)                                                            \
     case jump_cmd:                                                                              \
@@ -131,7 +160,10 @@ enum SPU_ERROR processing (spu_t* const processor)
                 {
                     return CANT_DIV_SPU;
                 }
-                if (second == 0)
+
+                stack_elem zero = 0;
+
+                if (memcmp (&second, &zero, sizeof (stack_elem)) == 0)
                 {
                     return CANT_DIV_SPU;
                 }
@@ -153,6 +185,34 @@ enum SPU_ERROR processing (spu_t* const processor)
                 if (stack_push (processor->stk, sqrt (number)) == CANT_PUSH)
                 {
                     return CANT_PUSH_IN_SQRT_SPU;
+                }
+                break;
+            }
+            case SIN:
+            {
+                LOG_CMD_DEFINED (SIN);
+                stack_elem number = 0;
+                if (stack_pop (processor->stk, &number) == CANT_POP)
+                {
+                    return CANT_POP_IN_SIN_SPU;
+                }
+                if (stack_push (processor->stk, sin (number)) == CANT_PUSH)
+                {
+                    return CANT_PUSH_IN_SIN_SPU;
+                }
+                break;
+            }
+            case COS:
+            {
+                LOG_CMD_DEFINED (COS);
+                stack_elem number = 0;
+                if (stack_pop (processor->stk, &number) == CANT_POP)
+                {
+                    return CANT_POP_IN_COS_SPU;
+                }
+                if (stack_push (processor->stk, cos (number)) == CANT_PUSH)
+                {
+                    return CANT_PUSH_IN_COS_SPU;
                 }
                 break;
             }
@@ -221,6 +281,16 @@ enum SPU_ERROR processing (spu_t* const processor)
                 }
                 break;
             }
+            case MEOW:
+            {
+                LOG_CMD_DEFINED (MEOW);
+                enum SPU_ERROR result = meow_cmd (processor);
+                if (result != DONE_SPU)
+                {
+                    return result;
+                }
+                break;
+            }
 
             case JMP:
             {
@@ -233,8 +303,9 @@ enum SPU_ERROR processing (spu_t* const processor)
             CASE_JUMP (JAE, >=);
             CASE_JUMP (JB,  < );
             CASE_JUMP (JBE, <=);
-            CASE_JUMP (JE,  ==);
-            CASE_JUMP (JNE, !=);
+
+            CASE_JUMP_EQUAL (JE,  ==);
+            CASE_JUMP_EQUAL (JNE, !=);
 
             case HLT:
             {
@@ -511,7 +582,10 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor)
 
     fprintf (stderr, "Put \'T\' to get interpretation in symbols of draw of RAM in terminal.\n"
                      "Put any another symbol to continue without it\n");
-    fscanf (stdin, "%c", &control_symbol);
+    if (fscanf (stdin, "%c", &control_symbol) != 1)
+    {
+        return DONE_SPU;
+    }
 //------------------------------------------------------------------------------------------------------------
 
     if (control_symbol == 'T')
@@ -534,6 +608,27 @@ static enum SPU_ERROR draw_cmd (spu_t* const processor)
             }
             fputc ('\n', stdout);
         }
+    }
+
+    return DONE_SPU;
+}
+static enum SPU_ERROR meow_cmd (spu_t* const processor)
+{
+    ASSERT (processor != NULL, "Invalid argument processor = %p\n", processor);
+
+    stack_elem number = 0;
+
+    if (stack_pop (processor->stk, &number) != DONE)
+    {
+        return CANT_POP_IN_MEOW_SPU;
+    }
+
+    stack_elem counter = 0;
+
+    while (counter < number)
+    {
+        fprintf (stdout, "meow ");
+        counter++;
     }
 
     return DONE_SPU;

@@ -45,7 +45,12 @@ enum SPU_ERROR
     CANT_PUSH_IN_SQRT_SPU   = 24,
     CANT_POP_IN_SQRT_SPU    = 25,
     CANT_FIND_SQRT_SPU      = 26,
-    WITHOUT_HLT             = 27,
+    CANT_POP_IN_SIN_SPU     = 27,
+    CANT_PUSH_IN_SIN_SPU    = 28,
+    CANT_POP_IN_COS_SPU     = 29,
+    CANT_PUSH_IN_COS_SPU    = 30,
+    CANT_POP_IN_MEOW_SPU    = 31,
+    WITHOUT_HLT             = 32,
 };
 
 typedef struct spu

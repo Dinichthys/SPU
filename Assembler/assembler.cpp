@@ -93,11 +93,14 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
         CASE_CMD (MUL);
         CASE_CMD (DIV);
         CASE_CMD (SQRT);
+        CASE_CMD (SIN);
+        CASE_CMD (COS);
         CASE_CMD (IN);
         CASE_CMD (OUT);
         CASE_CMD (DUMP);
         CASE_CMD (RET);
         CASE_CMD (DRAW);
+        CASE_CMD (MEOW);
 
         if (jumper (assembler, cmd))
         {
@@ -370,6 +373,16 @@ static enum ASSEMBLER_ERROR push_or_pop_cmd (assembler_t* const assembler, const
 
         memcpy (assembler->code + assembler->count_cmd - 1, &argument, sizeof (argument));
 
+        if (argument & RAM)
+        {
+            if (strchr (reg, ']') == NULL)
+            {
+                return PUSH_OR_POP_INVAL_ARG;
+            }
+
+            *strchr (reg, ']') = '\0';
+        }
+
         number_reg = (size_t) register_num (reg);
         if (number_reg == (size_t) -1)
         {
@@ -441,7 +454,7 @@ static int register_num (char name [REG_NAME_LEN])
     ASSERT (name != NULL, "Invalid pointer name for function %s\n", __FUNCTION__);
 
     LOG (DEBUG, "Function %s got argument:\n"
-                "name = %p", __FUNCTION__, name);
+                "name = %s", __FUNCTION__, name);
 
     for (int number = 0; number < COUNT_REGS; number++)
     {
@@ -459,7 +472,7 @@ static size_t label_num (assembler_t* const assembler, char label [LABEL_NAME_LE
     ASSERT (label != NULL, "Invalid pointer label for function %s\n", __FUNCTION__);
 
     LOG (DEBUG, "Function %s got argument:\n"
-                "label = %p", __FUNCTION__, label);
+                "label = %s", __FUNCTION__, label);
 
     size_t number = 0;
 
