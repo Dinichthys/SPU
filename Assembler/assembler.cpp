@@ -101,6 +101,7 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
         CASE_CMD (RET);
         CASE_CMD (DRAW);
         CASE_CMD (MEOW);
+        CASE_CMD (BARK);
 
         if (jumper (assembler, cmd))
         {

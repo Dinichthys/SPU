@@ -23,6 +23,7 @@ static enum SPU_ERROR draw_cmd  (const spu_t* const processor);
 static enum SPU_ERROR draw_sfml (const spu_t* const processor);
 static enum SPU_ERROR dump_spu  (const spu_t* const processor);
 static enum SPU_ERROR meow_cmd  (spu_t* const processor);
+static enum SPU_ERROR bark_cmd  (spu_t* const processor);
 
 #define LOG_CMD_DEFINED(cmd)                                                                    \
     LOG (DEBUG, "Command " #cmd " was defined\n");
@@ -294,6 +295,17 @@ enum SPU_ERROR processing (spu_t* const processor)
                 }
                 break;
             }
+            case BARK:
+            {
+                LOG_CMD_DEFINED (BARK);
+                enum SPU_ERROR result = bark_cmd (processor);
+                if (result != DONE_SPU)
+                {
+                    return result;
+                }
+                break;
+            }
+
 
             case JMP:
             {
@@ -541,6 +553,30 @@ static enum SPU_ERROR meow_cmd (spu_t* const processor)
     while (counter < number)
     {
         fprintf (stdout, "meow ");
+        counter++;
+    }
+
+    fputc ('\n', stdout);
+
+    return DONE_SPU;
+}
+
+static enum SPU_ERROR bark_cmd (spu_t* const processor)
+{
+    ASSERT (processor != NULL, "Invalid argument processor = %p\n", processor);
+
+    stack_elem number = 0;
+
+    if (stack_pop (processor->stk, &number) != DONE)
+    {
+        return CANT_POP_IN_BARK_SPU;
+    }
+
+    stack_elem counter = 0;
+
+    while (counter < number)
+    {
+        fprintf (stdout, "bark ");
         counter++;
     }
 

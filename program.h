@@ -33,6 +33,7 @@ enum COMMANDS
     RET   = 21,
     DRAW  = 22,
     MEOW  = 23,
+    BARK  = 24,
     HLT   = 0,
 };
 

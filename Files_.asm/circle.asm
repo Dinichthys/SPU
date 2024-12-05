@@ -41,7 +41,7 @@ for_1:
 
     jb not_circle:
 
-        push 65
+        push 255
 
         push bx
         push 20

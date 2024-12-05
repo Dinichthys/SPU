@@ -51,7 +51,8 @@ enum SPU_ERROR
     CANT_POP_IN_COS_SPU     = 29,
     CANT_PUSH_IN_COS_SPU    = 30,
     CANT_POP_IN_MEOW_SPU    = 31,
-    WITHOUT_HLT             = 32,
+    CANT_POP_IN_BARK_SPU    = 32,
+    WITHOUT_HLT             = 33,
 };
 
 typedef struct spu
