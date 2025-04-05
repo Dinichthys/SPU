@@ -110,18 +110,21 @@ clean_stack:
 
 
 circle: compiler processor
-	@./compiler Files_.asm/circle.asm program_code.txt
+	@./compiler Files_asm/circle.asm program_code.txt
 
-fibonaci: compiler processor
-	@./compiler Files_.asm/fibonaci.asm program_code.txt
+fibonacci: compiler processor
+	@./compiler Files_asm/fibonacci.asm program_code.txt
 
 factorial: compiler processor
-	@./compiler Files_.asm/factorial.asm program_code.txt
+	@./compiler Files_asm/factorial.asm program_code.txt
 
 square_solver: compiler processor
-	@./compiler Files_.asm/square_solver.asm program_code.txt
+	@./compiler Files_asm/square_solver.asm program_code.txt
 
 
 run:
 	@./processor program_code.txt
 
+
+disasm:
+	@./disassembler program_code.txt disasm.asm

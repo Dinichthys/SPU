@@ -36,13 +36,11 @@ int main (const int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    // NOTE зануление в корнструктор
     assembler_t assembler = {.labels = {}, .labels_size = 0,
                              .code = NULL, .count_cmd = 0,
                              .input_buffer = NULL, .input_offset = 0,
                              .output = argv [2]};
 
-    // NOTE не передавать argv, че за нах
     enum ASSEMBLER_ERROR result = asm_ctor (&assembler, argv [1]);
 
     ERROR_HANDLER (result);

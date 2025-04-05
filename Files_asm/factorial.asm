@@ -3,7 +3,7 @@ pop bx
 call factorial:
 
 push cx
-bark
+out
 
 hlt
 

@@ -1,14 +1,14 @@
 in
 pop dx
 
-call fibonaci:
+call fibonacci:
 
 push cx
 out
 
 hlt
 
-fibonaci:
+fibonacci:
 
     push dx
     push 3
@@ -29,7 +29,7 @@ fibonaci:
 
     pop dx
 
-    call fibonaci:
+    call fibonacci:
 
     push bx
     push cx

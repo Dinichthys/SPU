@@ -36,6 +36,12 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
             break;
         }
 
+        assembler->input_offset += skip_space_symbols (assembler->input_buffer + assembler->input_offset);
+
+        assembler->input_offset += strlen (cmd);
+
+        assembler->input_offset += skip_space_symbols (assembler->input_buffer + assembler->input_offset);
+
         if (cmd [0] == COMMENT_SYMBOL)
         {
             char* comment_end = strchr (assembler->input_buffer + assembler->input_offset, '\n');
@@ -61,10 +67,6 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
 
             continue;
         }
-
-        assembler->input_offset += strlen (cmd);
-
-        assembler->input_offset += skip_space_symbols (assembler->input_buffer + assembler->input_offset);
 
         assembler->count_cmd++;
 
@@ -264,6 +266,8 @@ static enum ASSEMBLER_ERROR push_or_pop_cmd (assembler_t* const assembler, const
     sscanf (assembler->input_buffer + assembler->input_offset, "%[^\t^\n^ ^\r]", str_argument);
     assembler->input_offset += strlen (str_argument);
     assembler->input_offset += skip_space_symbols (assembler->input_buffer + assembler->input_offset);
+
+    LOG (DEBUG, "Read the argument = \"%s\"\n", arg_offset);
 
     char reg [REG_NAME_LEN] = "";
     size_t number_reg = 0;

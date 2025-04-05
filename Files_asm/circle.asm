@@ -27,53 +27,38 @@ for_1:
 
     add
 
-    push 49
+    push 50
 
-    sub
-
-    pop ex
-
-    push ex
-    push ex
-    mul
-
-    push 100
+;    sub
+;
+;    pop ex
+;
+;    push ex
+;    push ex
+;    mul
+;
+;    push 100
 
     jb not_circle:
 
         push 255
-
-        push bx
-        push 20
-        mul
-
-        push cx
-
-        add
-
-        pop dx
-
-        pop [dx]
-
-        jmp end_push_symbol:
+        jmp end_change_color:
 
     not_circle:
-
         push 0
 
-        push bx
-        push 20
-        mul
+    end_change_color:
+    push bx
+    push 20
+    mul
 
-        push cx
+    push cx
 
-        add
+    add
 
-        pop dx
+    pop dx
 
-        pop [dx]
-
-    end_push_symbol:
+    pop [dx]
 
     push cx
     push 1
@@ -104,10 +89,6 @@ for_1:
         ja for_1:
 
 draw
-
-push 49
-
-sqrt
 
 hlt
 
