@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../My_lib/Logger/logging.h"
+#include "Logger/logging.h"
 
 #define ERROR_HANDLER(error)                                                                            \
     if (error != DONE_DISASM)                                                                           \
@@ -18,14 +18,14 @@
 
 int main (const int argc, const char* argv[])
 {
-    FILE* const error_file = fopen ("My_lib/Logger/error.txt", "w");
+    FILE* const error_file = fopen ("log/log.txt", "w");
     if (error_file == NULL)
     {
         fprintf (stderr, "Can't start logging\n");
         return EXIT_FAILURE;
     }
     set_log_file (error_file);
-    set_log_lvl (DEBUG);
+    set_log_lvl (kDebug);
 
     if (argc != 3)
     {
@@ -36,7 +36,7 @@ int main (const int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    disassembler_t disassembler = {0};
+    disassembler_t disassembler = {};
 
     enum DISASSEMBLER_ERROR result = disasm_ctor (&disassembler, argv [1]);
 

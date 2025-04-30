@@ -5,11 +5,12 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "../program.h"
-#include "../My_lib/Assert/my_assert.h"
-#include "../My_lib/Logger/logging.h"
-#include "../My_lib/My_stdio/my_stdio.h"
-#include "../My_lib/helpful.h"
+#include "program.h"
+
+#include "Assert/my_assert.h"
+#include "Logger/logging.h"
+#include "My_stdio/my_stdio.h"
+#include "helpful.h"
 
 static enum DISASSEMBLER_ERROR tolower_write   (disassembler_t* const disassembler, const char* const string);
 static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembler, const command_t argument);
@@ -17,7 +18,7 @@ static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembl
 #define CASE_CMD(command)                                                                   \
     case command:                                                                           \
     {                                                                                       \
-        LOG (DEBUG, #command " was recognised\n");                                          \
+        LOG (kDebug, #command " was recognised\n");                                          \
         tolower_write (disassembler, #command);                                             \
         sprintf (disassembler->output_buffer + disassembler->output_offset, "\n");          \
         disassembler->output_offset += 1;                                                   \
@@ -27,7 +28,7 @@ static enum DISASSEMBLER_ERROR push_or_pop_cmd (disassembler_t* const disassembl
 #define CASE_JUMP(jump_cmd)                                                                                 \
     case jump_cmd:                                                                                          \
     {                                                                                                       \
-        LOG (DEBUG, #jump_cmd " was recognised\n");                                                         \
+        LOG (kDebug, #jump_cmd " was recognised\n");                                                         \
         size_t pointer = 0;                                                                                 \
         memcpy (&pointer, disassembler->code + disassembler->ip, sizeof (pointer));                         \
                                                                                                             \
@@ -53,7 +54,7 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
         command_t cmd = (cmd_and_arg >> ARGUMENT_TYPE);
         command_t arg = (cmd_and_arg & ALL_ARGS);
 
-        LOG (DEBUG, "Iteration №%lu\n"
+        LOG (kDebug, "Iteration №%lu\n"
                     "cmd_and_arg = %8.8b", disassembler->ip, cmd_and_arg);
 
         (disassembler->ip)++;
@@ -62,7 +63,7 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
         {
             case PUSH:
             {
-                LOG (DEBUG, "PUSH was recognised\n");
+                LOG (kDebug, "PUSH was recognised\n");
 
                 sprintf (disassembler->output_buffer + disassembler->output_offset, "push ");
                 disassembler->output_offset += 5;
@@ -76,7 +77,7 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
             }
             case POP:
             {
-                LOG (DEBUG, "POP was recognised\n");
+                LOG (kDebug, "POP was recognised\n");
 
                 sprintf (disassembler->output_buffer + disassembler->output_offset, "pop ");
                 disassembler->output_offset += 4;

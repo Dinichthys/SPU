@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../My_lib/Logger/logging.h"
-#include "../My_lib/My_stdio/my_stdio.h"
+#include "Logger/logging.h"
+#include "My_stdio/my_stdio.h"
 
 #define ERROR_HANDLER(error)                                                                            \
     if (error != DONE_SPU)                                                                              \
@@ -26,16 +26,16 @@ int main (const int argc, const char* argv[])
         return EXIT_FAILURE;
     }
 
-    FILE* const error_file = fopen ("My_lib/Logger/error.txt", "w");
+    FILE* const error_file = fopen ("log/log.txt", "w");
     if (error_file == NULL)
     {
         fprintf (stderr, "Can't start logging\n");
         return EXIT_FAILURE;
     }
     set_log_file (error_file);
-    set_log_lvl (DEBUG);
+    set_log_lvl (kDebug);
 
-    spu_t processor = {0};
+    spu_t processor = {};
 
     enum SPU_ERROR result = spu_ctor (&processor, argv [1]);
 

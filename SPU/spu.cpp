@@ -9,12 +9,12 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
-#include "../program.h"
-#include "../Stack/stack.h"
-#include "../My_lib/Assert/my_assert.h"
-#include "../My_lib/Logger/logging.h"
-#include "../My_lib/My_stdio/my_stdio.h"
-#include "../My_lib/helpful.h"
+#include "program.h"
+#include "Stack/stack.h"
+#include "Assert/my_assert.h"
+#include "Logger/logging.h"
+#include "My_stdio/my_stdio.h"
+#include "helpful.h"
 
 static bool get_two_args (stack_elem* const first, stack_elem* const second, stack_t* const stk);
 static enum SPU_ERROR push_cmd  (spu_t* const processor, const command_t argument);
@@ -26,7 +26,7 @@ static enum SPU_ERROR meow_cmd  (spu_t* const processor);
 static enum SPU_ERROR bark_cmd  (spu_t* const processor);
 
 #define LOG_CMD_DEFINED(cmd)                                                                    \
-    LOG (DEBUG, "Command " #cmd " was defined\n");
+    LOG (kDebug, "Command " #cmd " was defined\n");
 
 #define CASE_JUMP_EQUAL(jump_cmd, compare)                                                      \
     case jump_cmd:                                                                              \

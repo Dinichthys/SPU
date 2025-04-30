@@ -5,11 +5,11 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../program.h"
-#include "../My_lib/Assert/my_assert.h"
-#include "../My_lib/Logger/logging.h"
-#include "../My_lib/My_stdio/my_stdio.h"
-#include "../My_lib/helpful.h"
+#include "program.h"
+#include "Assert/my_assert.h"
+#include "Logger/logging.h"
+#include "My_stdio/my_stdio.h"
+#include "helpful.h"
 
 static enum ASSEMBLER_ERROR push_or_pop_cmd (assembler_t* const assembler, const bool push);
 static bool jumper (assembler_t* const assembler, char* const cmd);
@@ -45,7 +45,7 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
                 break;
             }
 
-            LOG (DEBUG, "Offset = %lu \n"
+            LOG (kDebug, "Offset = %lu \n"
                         "Pointer on the end of comment = %p \n"
                         "Pointer on the buffer = %p\n"
                         "New offset = %lu\n"
@@ -57,7 +57,7 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
 
             assembler->input_offset = (size_t) (comment_end - assembler->input_buffer + 1);
 
-            LOG (DEBUG, "Commentation %s with offset %lu\n", cmd, assembler->input_offset);
+            LOG (kDebug, "Commentation %s with offset %lu\n", cmd, assembler->input_offset);
 
             continue;
         }
@@ -430,7 +430,7 @@ static bool jumper (assembler_t* const assembler, char* const cmd)
             return true;                                                                                    \
         }
 
-    LOG (DEBUG, "The function jumper got arguments:\n"
+    LOG (kDebug, "The function jumper got arguments:\n"
                 "| cmd = %p | assembler = %p | input = %p |\n", cmd, assembler, assembler->input_buffer);
 
     CASE_JUMP (JMP);
@@ -451,7 +451,7 @@ static int register_num (char name [REG_NAME_LEN])
 {
     ASSERT (name != NULL, "Invalid pointer name for function %s\n", __FUNCTION__);
 
-    LOG (DEBUG, "Function %s got argument:\n"
+    LOG (kDebug, "Function %s got argument:\n"
                 "name = %s", __FUNCTION__, name);
 
     for (int number = 0; number < COUNT_REGS; number++)
@@ -469,7 +469,7 @@ static size_t label_num (assembler_t* const assembler, char label [LABEL_NAME_LE
 {
     ASSERT (label != NULL, "Invalid pointer label for function %s\n", __FUNCTION__);
 
-    LOG (DEBUG, "Function %s got argument:\n"
+    LOG (kDebug, "Function %s got argument:\n"
                 "label = %s", __FUNCTION__, label);
 
     size_t number = 0;
