@@ -9,8 +9,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 
-#include "program.h"
-#include "Stack/stack.h"
+#include "../libs/program.h"
+#include "../libs/Stack/stack.h"
 #include "Assert/my_assert.h"
 #include "Logger/logging.h"
 #include "My_stdio/my_stdio.h"
@@ -84,6 +84,24 @@ static enum SPU_ERROR bark_cmd  (spu_t* const processor);
     }
 // ----------------------------------------------------------------------------------------------
 
+#define CASE_OP(op_cmd, operation)                                                              \
+    case op_cmd:                                                                                \
+    {                                                                                           \
+        LOG_CMD_DEFINED (op_cmd);                                                               \
+        stack_elem first  = 0;                                                                  \
+        stack_elem second = 0;                                                                  \
+        if (!(get_two_args (&first, &second, &(processor->stk))))                               \
+        {                                                                                       \
+            fprintf (stderr, "There is no element in stack to do the command " #op_cmd "\n");   \
+            return CANT_ ## op_cmd ## _SPU;                                                     \
+        }                                                                                       \
+                                                                                                \
+        stack_push (processor->stk, first operation second);                                    \
+                                                                                                \
+        break;                                                                                  \
+    }
+// ----------------------------------------------------------------------------------------------
+
 enum SPU_ERROR processing (spu_t* const processor)
 {
     ASSERT (processor != NULL, "Invalid argument for processing = %p\n", processor);
@@ -117,43 +135,11 @@ enum SPU_ERROR processing (spu_t* const processor)
                 }
                 break;
             }
-            case ADD:
-            {
-                LOG_CMD_DEFINED (ADD);
-                stack_elem first  = 0;
-                stack_elem second = 0;
 
-                if (!(get_two_args (&first, &second, &(processor->stk))))
-                {
-                    return CANT_ADD_SPU;
-                }
-                stack_push (processor->stk, first + second);
-                break;
-            }
-            case SUB:
-            {
-                LOG_CMD_DEFINED (SUB);
-                stack_elem first  = 0;
-                stack_elem second = 0;
-                if (!(get_two_args (&first, &second, &(processor->stk))))
-                {
-                    return CANT_SUB_SPU;
-                }
-                stack_push (processor->stk, first - second);
-                break;
-            }
-            case MUL:
-            {
-                LOG_CMD_DEFINED (MUL);
-                stack_elem first  = 0;
-                stack_elem second = 0;
-                if (!(get_two_args (&first, &second, &(processor->stk))))
-                {
-                    return CANT_MUL_SPU;
-                }
-                stack_push (processor->stk, first * second);
-                break;
-            }
+            CASE_OP (ADD, +);
+            CASE_OP (SUB, -);
+            CASE_OP (MUL, *);
+
             case DIV:
             {
                 LOG_CMD_DEFINED (DIV);
@@ -306,6 +292,12 @@ enum SPU_ERROR processing (spu_t* const processor)
                 break;
             }
 
+            CASE_OP (MORE,   > );
+            CASE_OP (MOREEQ, >=);
+            CASE_OP (LESS,   < );
+            CASE_OP (LESSEQ, <=);
+            CASE_OP (EQ,     ==);
+            CASE_OP (NEQ,    !=);
 
             case JMP:
             {
@@ -745,3 +737,8 @@ static bool get_two_args (stack_elem* const first, stack_elem* const second, sta
 
     return true;
 }
+
+#undef LOG_CMD_DEFINED
+#undef CASE_JUMP_EQUAL
+#undef CASE_JUMP
+#undef CASE_COMP

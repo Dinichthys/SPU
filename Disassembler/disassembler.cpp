@@ -109,6 +109,13 @@ enum DISASSEMBLER_ERROR disassembling (disassembler_t* const disassembler)
             CASE_CMD (MEOW);
             CASE_CMD (BARK);
 
+            CASE_CMD (MORE);
+            CASE_CMD (MOREEQ);
+            CASE_CMD (LESS);
+            CASE_CMD (LESSEQ);
+            CASE_CMD (EQ);
+            CASE_CMD (NEQ);
+
             CASE_JUMP (JMP);
             CASE_JUMP (JA);
             CASE_JUMP (JAE);

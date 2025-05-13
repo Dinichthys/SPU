@@ -4,10 +4,11 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-#include "../Stack/stack.h"
+#include "../libs/Stack/stack.h"
 #include "../program.h"
 
 typedef double spu_elem_t;
+typedef size_t stack_t;
 
 static const int    SLEEP_IN_RAM             = 0;
 static const size_t RAM_SIZE                 = 10000;
@@ -53,6 +54,12 @@ enum SPU_ERROR
     CANT_POP_IN_MEOW_SPU    = 31,
     CANT_POP_IN_BARK_SPU    = 32,
     WITHOUT_HLT             = 33,
+    CANT_MORE_SPU           = 34,
+    CANT_MOREEQ_SPU         = 35,
+    CANT_LESS_SPU           = 36,
+    CANT_LESSEQ_SPU         = 37,
+    CANT_EQ_SPU             = 38,
+    CANT_NEQ_SPU            = 39,
 };
 
 typedef struct spu
