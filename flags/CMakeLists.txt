@@ -28,7 +28,7 @@ target_compile_options (flags_SPU
 
         $<$<CONFIG:Release>:
             -O2
-            -flto
+            # -flto
             -DNDEBUG
         >
 )
@@ -48,7 +48,7 @@ target_link_options (flags_SPU
 
         $<$<CONFIG:Release>:
             -O2
-            -flto
+            # -flto
             -DNDEBUG
         >
 )
