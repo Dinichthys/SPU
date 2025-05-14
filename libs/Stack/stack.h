@@ -51,21 +51,23 @@ typedef size_t stack_t;
 
 enum STACK_ERROR
 {
-    DONE          = 0,
-    CANT_CREATE   = 1,
-    CANT_DESTROY  = 1 << 1,
-    CANT_RESIZE   = 1 << 2,
-    CANT_PUSH     = 1 << 3,
-    CANT_POP      = 1 << 4,
-    CANT_DUMP     = 1 << 5,
-    BAD_STACK_PTR = 1 << 6,
-    BAD_FILE_NAME = 1 << 7,
-    BAD_LINE_NUM  = 1 << 8,
-    BAD_NAME      = 1 << 9,
-    BAD_SIZE      = 1 << 10,
-    BAD_CAPACITY  = 1 << 11,
-    BAD_DATA      = 1 << 12,
-    BAD_STACK     = 1 << 13,
+    DONE                = 0,
+    CANT_CREATE         = 1,
+    CANT_DESTROY        = 1 << 1,
+    CANT_RESIZE         = 1 << 2,
+    CANT_PUSH           = 1 << 3,
+    CANT_POP            = 1 << 4,
+    CANT_DUMP           = 1 << 5,
+    BAD_STACK_PTR       = 1 << 6,
+    BAD_FILE_NAME       = 1 << 7,
+    BAD_LINE_NUM        = 1 << 8,
+    BAD_NAME            = 1 << 9,
+    BAD_SIZE            = 1 << 10,
+    BAD_CAPACITY        = 1 << 11,
+    BAD_DATA            = 1 << 12,
+    BAD_STACK           = 1 << 13,
+    CANT_MOV_ON_INDEX   = 1 << 14,
+    CANT_GET_FROM_INDEX = 1 << 15,
 };
 
 enum RESIZE_DIRECTION
@@ -98,12 +100,16 @@ struct stack
     #endif // HASH_PROT
 };
 
-enum STACK_ERROR stack_ctor (size_t* const stack_encode, const size_t num_elem,
-                             const char* file, const int line, const char* func, const char* name);
-enum STACK_ERROR stack_dtor (const size_t stack_encode);
-enum STACK_ERROR stack_push (const size_t stack_encode, const stack_elem element);
-enum STACK_ERROR stack_pop  (const size_t stack_encode, stack_elem* const element);
-enum STACK_ERROR dump       (const size_t stack_encode, const char* const file, const int line);
-const char* decoder_error   (const int error);
+enum STACK_ERROR stack_ctor           (size_t* const stack_encode, const size_t num_elem,
+                                       const char* file, const int line, const char* func, const char* name);
+enum STACK_ERROR stack_dtor           (const size_t stack_encode);
+enum STACK_ERROR stack_push           (const size_t stack_encode, const stack_elem element);
+enum STACK_ERROR stack_pop            (const size_t stack_encode, stack_elem* const element);
+enum STACK_ERROR stack_mov_on_index   (const size_t stack_encode, const stack_elem element, const size_t index);
+enum STACK_ERROR stack_get_from_index (const size_t stack_encode, stack_elem* const element, const size_t index);
+enum STACK_ERROR dump                 (const size_t stack_encode, const char* const file, const int line);
+const char* decoder_error             (const int error);
+
+size_t stack_size (const size_t stack_encode);
 
 #endif // STACK_H

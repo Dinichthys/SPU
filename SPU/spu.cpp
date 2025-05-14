@@ -52,6 +52,7 @@ static enum SPU_ERROR bark_cmd  (spu_t* const processor);
             processor->ip += sizeof (pointer);                                                  \
         }                                                                                       \
                                                                                                 \
+        processor->regs [kRSPIndex] -= 2;                                                       \
         break;                                                                                  \
     }
 //-----------------------------------------------------------------------------------------------
@@ -80,6 +81,7 @@ static enum SPU_ERROR bark_cmd  (spu_t* const processor);
             processor->ip += sizeof (pointer);                                                  \
         }                                                                                       \
                                                                                                 \
+        processor->regs [kRSPIndex] -= 2;                                                       \
         break;                                                                                  \
     }
 // ----------------------------------------------------------------------------------------------
@@ -98,6 +100,7 @@ static enum SPU_ERROR bark_cmd  (spu_t* const processor);
                                                                                                 \
         stack_push (processor->stk, first operation second);                                    \
                                                                                                 \
+        processor->regs [kRSPIndex]--;                                                          \
         break;                                                                                  \
     }
 // ----------------------------------------------------------------------------------------------
@@ -157,6 +160,8 @@ enum SPU_ERROR processing (spu_t* const processor)
                     return CANT_DIV_SPU;
                 }
                 stack_push (processor->stk, first / second);
+
+                processor->regs [kRSPIndex]--;
                 break;
             }
             case SQRT:
@@ -214,6 +219,7 @@ enum SPU_ERROR processing (spu_t* const processor)
                 {
                     return CANT_PUSH_IN_IN_SPU;
                 }
+                processor->regs [kRSPIndex]++;
                 break;
             }
             case OUT:
@@ -224,6 +230,7 @@ enum SPU_ERROR processing (spu_t* const processor)
                 {
                     return CANT_POP_IN_OUT_SPU;
                 }
+                processor->regs [kRSPIndex]--;
                 fprintf (stdout, "\nOUT = %.5lf\n", number);
                 break;
             }
@@ -426,11 +433,15 @@ static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument
     ASSERT (processor != NULL, "Invalid argument for push_cmd processor = %p\n", processor);
 
     double number = 0;
+    size_t number_reg = 0;
+
+    LOG (kDebug, "Rsp        = %lf\n"
+                 "Rbp        = %lf\n"
+                 "Stack size = %lu\n",
+                 processor->regs [kRSPIndex], processor->regs [kRBPIndex], stack_size (processor->stk));
 
     if (argument & REGISTER)
     {
-        size_t number_reg = 0;
-
         memcpy (&number_reg, processor->code + processor->ip, sizeof (number_reg));
         processor->ip += sizeof (number_reg);
 
@@ -462,13 +473,34 @@ static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument
         }
 
         size_t temp = (size_t) round (number);
-        number = processor->ram [temp];
+
+        if ((number_reg == kRSPIndex) || (number_reg == kRBPIndex))
+        {
+            if (stack_get_from_index (processor->stk, &number, temp)
+                != DONE)
+            {
+                return CANT_GET_IN_PUSH_SPU;
+            }
+            LOG (kDebug, "Temp = %lu\n"
+                         "Register value = %lu\n"
+                         "Register value = %lf\n"
+                         "Index to access to stack = %lu\n"
+                         "Number = %lf\n",
+                         temp, (size_t) round (processor->regs [number_reg]),
+                         processor->regs [number_reg], temp, number);
+        }
+        else
+        {
+            number = processor->ram [temp];
+        }
     }
 
     if (stack_push (processor->stk, number) == CANT_PUSH)
     {
-        return CANT_PUSH_IN_IN_SPU;
+        return CANT_PUSH_IN_PUSH_SPU;
     }
+
+    processor->regs [kRSPIndex]++;
 
     return DONE_SPU;
 }
@@ -478,11 +510,15 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
     ASSERT (processor != NULL, "Invalid argument for pop_cmd processor = %p\n", processor);
 
     double* ptr_number = 0;
+    size_t number_reg = 0;
+
+    LOG (kDebug, "Rsp        = %lf\n"
+                 "Rbp        = %lf\n"
+                 "Stack size = %lu\n",
+                 processor->regs [kRSPIndex], processor->regs [kRBPIndex], stack_size (processor->stk));
 
     if (argument & REGISTER)
     {
-        size_t number_reg = 0;
-
         memcpy (&number_reg, processor->code + processor->ip, sizeof (number_reg));
         processor->ip += sizeof (number_reg);
 
@@ -493,6 +529,9 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
 
         if ((number_reg == 0) && (argument == REGISTER))
         {
+            double number = 0;
+            processor->regs [kRSPIndex]--;
+            stack_pop (processor->stk, &number);
             return DONE_SPU;
         }
 
@@ -508,16 +547,44 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
             return CANT_POP_IN_POP_SPU;
         }
 
+        if ((number_reg == kRBPIndex) || (number_reg == kRSPIndex))
+        {
+            size_t immed_num = 0;
+            if (argument & IMMED_NUM)
+            {
+                memcpy (&immed_num, processor->code + processor->ip, sizeof (immed_num));
+                ptr_number = ptr_number + immed_num;
+                processor->ip += sizeof (immed_num);
+            }
+
+            double tmp = 0;
+
+            if (stack_pop (processor->stk, &tmp) == CANT_POP)
+            {
+                return CANT_POP_IN_POP_SPU;
+            }
+
+            if (stack_mov_on_index (processor->stk, tmp, immed_num + (size_t) round (processor->regs [number_reg]))
+                != DONE)
+            {
+                return CANT_MOV_IN_POP_SPU;
+            }
+
+            processor->regs [kRSPIndex]--;
+
+            return DONE_SPU;
+        }
+
         ptr_number = (ptr_number == 0) ? processor->ram
                                        : processor->ram + (size_t) round (*ptr_number);
     }
 
     if (argument & IMMED_NUM)
     {
-        size_t temp = 0;
+        double temp = 0;
 
         memcpy (&temp, processor->code + processor->ip, sizeof (temp));
-        ptr_number = ptr_number + temp;
+        ptr_number = ptr_number + (size_t) round (temp);
         processor->ip += sizeof (temp);
     }
 
@@ -525,6 +592,8 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
     {
         return CANT_POP_IN_POP_SPU;
     }
+
+    processor->regs [kRSPIndex]--;
 
     return DONE_SPU;
 }
@@ -539,6 +608,8 @@ static enum SPU_ERROR meow_cmd (spu_t* const processor)
     {
         return CANT_POP_IN_MEOW_SPU;
     }
+
+    processor->regs [kRSPIndex]--;
 
     stack_elem counter = 0;
 
@@ -563,6 +634,8 @@ static enum SPU_ERROR bark_cmd (spu_t* const processor)
     {
         return CANT_POP_IN_BARK_SPU;
     }
+
+    processor->regs [kRSPIndex]--;
 
     stack_elem counter = 0;
 

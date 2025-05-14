@@ -629,13 +629,14 @@ enum STACK_ERROR dump (const size_t stack_encode, const char* const file, const 
     for (size_t i = 0; i < stk->size; i++)
     {
         fprintf (stderr, "\t#[%lu] ", i);
-        size_t j = 0;
-        while (j < sizeof (stack_elem))
-        {
-            unsigned char* symbol = ((unsigned char*) (stk->data) + i * sizeof (stack_elem) + j);
-            fprintf (stderr, "%8.8b ", *symbol);
-            j++;
-        }
+        // size_t j = 0;
+        // while (j < sizeof (stack_elem))
+        // {
+        //     unsigned char* symbol = ((unsigned char*) (stk->data) + i * sizeof (stack_elem) + j);
+        //     fprintf (stderr, "%8.8b ", *symbol);
+        //     j++;
+        // }
+        fprintf (stderr, "%lf", stk->data [i]);
         fprintf (stderr, "\n");
     }
 
@@ -668,4 +669,149 @@ const char* decoder_error (const int error)
         default:
             return "Invalid value for error";
     }
+}
+
+enum STACK_ERROR stack_mov_on_index (const size_t stack_encode, const stack_elem element, const size_t index)
+{
+    stack* const stk = (stack*) (stack_encode ^ KEY);
+
+    if ((stk == NULL) || (stack_ok (stk) != DONE))
+    {
+        return CANT_MOV_ON_INDEX;
+    }
+
+    #ifdef CANARY_PROT
+
+    if (check_canary (stk))
+    {
+        return CANT_MOV_ON_INDEX;
+    }
+
+    #endif // CANARY_PROT
+
+    #ifdef HASH_PROT
+
+    if (stk->hash_stack != hashing ((const uint8_t*) stk, sizeof (stack) - sizeof (stk->hash_stack)))
+    {
+        return CANT_MOV_ON_INDEX;
+    }
+
+    if (stk->hash_data != hashing ((const uint8_t*) stk->data, stk->capacity * sizeof (stack_elem)))
+    {
+        return CANT_MOV_ON_INDEX;
+    }
+
+    #endif // HASH_PROT
+
+    enum STACK_ERROR error = DONE;
+
+    stk->data [index] = element;
+
+    #ifdef CANARY_PROT
+
+    if (check_canary (stk))
+    {
+        return CANT_MOV_ON_INDEX;
+    }
+
+    #endif // CANARY_PROT
+
+    #ifdef HASH_PROT
+
+    stk->hash_data = hashing ((const uint8_t*) stk->data, stk->capacity * sizeof (stack_elem));
+
+    #endif // HASH_PROT
+
+    return error;
+}
+
+enum STACK_ERROR stack_get_from_index (const size_t stack_encode, stack_elem* const element, const size_t index)
+{
+    stack* const stk = (stack*) (stack_encode ^ KEY);
+
+    if ((stk == NULL) || (element == NULL) || (stack_ok (stk) != DONE))
+    {
+        return CANT_GET_FROM_INDEX;
+    }
+
+    #ifdef CANARY_PROT
+
+    if (check_canary (stk))
+    {
+        return CANT_GET_FROM_INDEX;
+    }
+
+    #endif // CANARY_PROT
+
+    #ifdef HASH_PROT
+
+    if (stk->hash_stack != hashing ((const uint8_t*) stk, sizeof (stack) - sizeof (stk->hash_stack)))
+    {
+        return CANT_GET_FROM_INDEX;
+    }
+
+    if (stk->hash_data != hashing ((const uint8_t*) stk->data, stk->capacity * sizeof (stack_elem)))
+    {
+        return CANT_GET_FROM_INDEX;
+    }
+
+    #endif // HASH_PROT
+
+    enum STACK_ERROR error = DONE;
+
+    *element = stk->data [index];
+
+    #ifdef HASH_PROT
+
+    stk->hash_data = hashing ((const uint8_t*) stk->data, stk->capacity * sizeof (stack_elem));
+
+    stk->hash_stack = hashing ((const uint8_t*) stk, sizeof (stack) - sizeof (stk->hash_stack));
+
+    #endif // HASH_PROT
+
+    #ifdef CANARY_PROT
+
+    if (check_canary (stk))
+    {
+        return CANT_GET_FROM_INDEX;
+    }
+
+    #endif // CANARY_PROT
+
+    return error;
+}
+
+size_t stack_size (const size_t stack_encode)
+{
+    stack* const stk = (stack*) (stack_encode ^ KEY);
+
+    if ((stk == NULL) || (stack_ok (stk) != DONE))
+    {
+        return 0;
+    }
+
+    #ifdef CANARY_PROT
+
+    if (check_canary (stk))
+    {
+        return 0;
+    }
+
+    #endif // CANARY_PROT
+
+    #ifdef HASH_PROT
+
+    if (stk->hash_stack != hashing ((const uint8_t*) stk, sizeof (stack) - sizeof (stk->hash_stack)))
+    {
+        return 0;
+    }
+
+    if (stk->hash_data != hashing ((const uint8_t*) stk->data, stk->capacity * sizeof (stack_elem)))
+    {
+        return 0;
+    }
+
+    #endif // HASH_PROT
+
+    return stk->size;
 }

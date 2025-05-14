@@ -31,6 +31,8 @@ enum ASSEMBLER_ERROR compile (assembler_t* const assembler)
     {
         char cmd [CMD_NAME_LEN] = "";
 
+        assembler->input_offset += skip_space_symbols (assembler->input_buffer + assembler->input_offset);
+
         if (sscanf (assembler->input_buffer + assembler->input_offset, "%s", cmd) == EOF)
         {
             break;
@@ -342,7 +344,8 @@ static enum ASSEMBLER_ERROR push_or_pop_cmd (assembler_t* const assembler, const
         strtok (str_argument, "+");
         sscanf (str_argument + arg_offset, "%s", reg);
 
-        if (sscanf (plus_position + 1, "%lf", &number_double) != 1)
+        size_t offset = 0;
+        if (sscanf (plus_position + 1, "%lu", &offset) != 1)
         {
             return PUSH_OR_POP_INVAL_ARG;
         }
@@ -358,8 +361,8 @@ static enum ASSEMBLER_ERROR push_or_pop_cmd (assembler_t* const assembler, const
         memcpy (assembler->code + assembler->count_cmd, &number_reg, sizeof (number_reg));
         assembler->count_cmd += sizeof (number_reg);
 
-        memcpy (assembler->code + assembler->count_cmd, &number_double, sizeof (number_double));
-        assembler->count_cmd += sizeof (number_double);
+        memcpy (assembler->code + assembler->count_cmd, &offset, sizeof (offset));
+        assembler->count_cmd += sizeof (offset);
 
         return DONE_ASM;
     }
