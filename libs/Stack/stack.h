@@ -68,6 +68,7 @@ enum STACK_ERROR
     BAD_STACK           = 1 << 13,
     CANT_MOV_ON_INDEX   = 1 << 14,
     CANT_GET_FROM_INDEX = 1 << 15,
+    CANT_SET_SIZE_STACK = 1 << 16,
 };
 
 enum RESIZE_DIRECTION
@@ -107,9 +108,10 @@ enum STACK_ERROR stack_push           (const size_t stack_encode, const stack_el
 enum STACK_ERROR stack_pop            (const size_t stack_encode, stack_elem* const element);
 enum STACK_ERROR stack_mov_on_index   (const size_t stack_encode, const stack_elem element, const size_t index);
 enum STACK_ERROR stack_get_from_index (const size_t stack_encode, stack_elem* const element, const size_t index);
+size_t           stack_size           (const size_t stack_encode);
+enum STACK_ERROR stack_set_size       (const size_t stack_encode, const size_t new_size);
 enum STACK_ERROR dump                 (const size_t stack_encode, const char* const file, const int line);
 const char* decoder_error             (const int error);
 
-size_t stack_size (const size_t stack_encode);
 
 #endif // STACK_H

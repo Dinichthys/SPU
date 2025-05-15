@@ -453,12 +453,22 @@ static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument
         number += processor->regs [number_reg];
     }
 
-    if (argument & IMMED_NUM)
+    if ((argument & IMMED_NUM) && ((argument & RAM) == 0))
     {
         double temp = 0;
 
         memcpy (&temp, processor->code + processor->ip, sizeof (temp));
         number += temp;
+
+        processor->ip += sizeof (temp);
+    }
+
+    if ((argument & IMMED_NUM) && (argument & RAM))
+    {
+        size_t temp = 0;
+
+        memcpy (&temp, processor->code + processor->ip, sizeof (temp));
+        number += (double) temp;
 
         processor->ip += sizeof (temp);
     }
@@ -473,6 +483,9 @@ static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument
         }
 
         size_t temp = (size_t) round (number);
+
+        LOG (kDebug, "Number = %lf\n"
+                     "Temp = %lu\n", number, temp);
 
         if ((number_reg == kRSPIndex) || (number_reg == kRBPIndex))
         {
@@ -494,6 +507,8 @@ static enum SPU_ERROR push_cmd (spu_t* const processor, const command_t argument
             number = processor->ram [temp];
         }
     }
+
+    LOG (kDebug, "Push number %lf\n", number);
 
     if (stack_push (processor->stk, number) == CANT_PUSH)
     {
@@ -530,8 +545,24 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
         if ((number_reg == 0) && (argument == REGISTER))
         {
             double number = 0;
-            processor->regs [kRSPIndex]--;
             stack_pop (processor->stk, &number);
+
+            LOG (kDebug, "Pop number %lf to register \"0x\"\n", number);
+
+            processor->regs [kRSPIndex]--;
+
+            return DONE_SPU;
+        }
+
+        if ((number_reg == kRSPIndex) && (argument == REGISTER))
+        {
+            double number = 0;
+            stack_pop (processor->stk, &number);
+
+            LOG (kDebug, "Pop number %lf to register \"RSP\"\n", number);
+
+            processor->regs [kRSPIndex] = number;
+            stack_set_size (processor->stk, (size_t) number);
             return DONE_SPU;
         }
 
@@ -570,6 +601,9 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
                 return CANT_MOV_IN_POP_SPU;
             }
 
+            LOG (kDebug, "Pop number %lf to stack on index %lu\n",
+                         tmp, immed_num + (size_t) round (processor->regs [number_reg]));
+
             processor->regs [kRSPIndex]--;
 
             return DONE_SPU;
@@ -581,10 +615,10 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
 
     if (argument & IMMED_NUM)
     {
-        double temp = 0;
+        size_t temp = 0;
 
         memcpy (&temp, processor->code + processor->ip, sizeof (temp));
-        ptr_number = ptr_number + (size_t) round (temp);
+        ptr_number = ptr_number + temp;
         processor->ip += sizeof (temp);
     }
 
@@ -592,6 +626,8 @@ static enum SPU_ERROR pop_cmd (spu_t* const processor, const command_t argument)
     {
         return CANT_POP_IN_POP_SPU;
     }
+
+    LOG (kDebug, "Pop number %lf\n", *ptr_number);
 
     processor->regs [kRSPIndex]--;
 
