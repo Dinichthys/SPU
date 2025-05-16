@@ -1,11 +1,9 @@
-#if !(defined(MY_ASSERT_H))
+#ifndef MY_ASSERT_H
 #define MY_ASSERT_H
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "../Assert/print_error.h"
-#include "../Logger/logging.h"
 
 #ifdef DEBUG
 #define ASSERT(comparison, ...)                                                     \
