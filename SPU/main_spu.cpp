@@ -1,10 +1,9 @@
-#include "spu.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "spu.h"
+
 #include "Logger/logging.h"
-#include "My_stdio/my_stdio.h"
 
 #define ERROR_HANDLER(error)                                                                            \
     if (error != DONE_SPU)                                                                              \
